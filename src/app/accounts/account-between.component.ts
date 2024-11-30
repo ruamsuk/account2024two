@@ -23,6 +23,9 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
     }
     <div class="card flex flex-wrap p-fluid">
       <p-card class="w-20rem xl:w-20rem mt-2 mx-auto">
+        <div class="text-center tasadith text-base -mt-3 mb-2 md:text-2xl">
+          <span>ตามช่วงเวลา</span>
+        </div>
         <div class="flex-auto px-3">
           <p-calendar
             [iconDisplay]="'input'"
@@ -41,19 +44,18 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
       </p-card>
     </div>
     @if (accountExp) {
-      <div
-        class="flex flex-wrap align-items-center justify-content-center mt-2"
-      >
+      <div class="flex justify-content-around align-items-center mt-3">
         <p-table
           [value]="accountExp"
           [rowHover]="true"
           [tableStyle]="{ 'min-width': '50rem' }"
           [scrollable]="true"
           scrollHeight="300px"
+          styleClass="p-datatable-striped"
         >
           <ng-template pTemplate="caption">
             <div class="flex justify-content-around tasadith md:text-xl">
-              <span class="text-yellow-300 tasadith text-xl">
+              <span class="text-yellow-300">
                 รายจ่าย <span class="mx-3"> ยอดคงเหลือ: </span>
               </span>
               <span class="text-red-300 tasadith text-xl">
@@ -121,15 +123,14 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
       </div>
     }
     @if (accountIncome) {
-      <div
-        class="flex flex-wrap align-items-center justify-content-center mt-2"
-      >
+      <div class="flex justify-content-around align-items-center mt-3">
         <p-table
           [value]="accountIncome"
           [rowHover]="true"
           [tableStyle]="{ 'min-width': '50rem' }"
           [scrollable]="true"
           scrollHeight="300px"
+          styleClass="p-datatable-striped"
         >
           <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">

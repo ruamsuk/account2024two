@@ -84,6 +84,12 @@ import { FooterComponent } from './pages/footer.component';
         position: relative;
         z-index: 1001; /* ปรับค่า z-index ให้สูงกว่า <th> */
       }
+
+      :host ::ng-deep .p-toast-message {
+        font-family: 'Sarabun', sans-serif;
+        font-size: 1.125rem;
+        font-style: italic;
+      }
     `,
   ],
 })

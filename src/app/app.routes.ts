@@ -56,8 +56,8 @@ export const routes: Routes = [
       {
         path: 'between-detail',
         loadComponent: () =>
-          import('./accounts/account-detail.component').then(
-            (m) => m.AccountDetailComponent,
+          import('./accounts/account-between-detail.component').then(
+            (m) => m.AccountBetweenDetailComponent,
           ),
       },
       {
