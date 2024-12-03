@@ -9,6 +9,13 @@
 @import "primeicons/primeicons.css";
 @import "primeflex/primeflex.css";
 
+@font-face {
+  font-family: 'Leelawadee UI';
+  src: url('/assets/fonts/LeelaUIb.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 html body {
   height: 100%;
 }
@@ -46,6 +53,10 @@ body {
 
 .anuphon {
   font-family: "Anuphan", sans-serif !important;
+}
+
+.leelawadee {
+  font-family: 'Leelawadee UI', sans-serif !important;
 }
 
 .pattaya {
@@ -136,6 +147,7 @@ body {
   width: 100%;
 }
 
+
 @media (min-width: 768px) {
   .responsive-card {
     width: 100%;
@@ -148,6 +160,12 @@ label {
 
 .p-datatable-wrapper {
   min-width: calc(100vh - 90px);
+}
+
+:host ::ng-deep {
+  .p-treeselect-label {
+    font-family: 'Sarabun', sans-serif !important;
+  }
 }
 
 .isIncome {
@@ -188,6 +206,7 @@ i.pi {
   //top: 10px;
 }
 
+label,
 input {
   font-family: 'Sarabun', sans-serif !important;
 }
@@ -195,7 +214,7 @@ input {
 .table-container {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch; /* สำหรับการเลื่อนที่นุ่มนวลบน iOS */
-  width: 850px;
+  width: 950px;
   margin: 0 auto;
 }
 

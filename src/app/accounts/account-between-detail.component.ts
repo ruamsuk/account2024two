@@ -90,16 +90,16 @@ import { AccountsComponent } from './accounts.component';
             <tr>
               <th>#</th>
               <th style="min-width: 120px">
-                <div class="flex align-items-center">วันที่</div>
+                <div>วันที่</div>
               </th>
               <th style="min-width: 120px">
-                <div class="flex align-items-center">จำนวนเงิน</div>
+                <div>จำนวนเงิน</div>
               </th>
               <th style="min-width: 150px">
-                <div class="flex align-items-center">หมายเหตุ</div>
+                <div>หมายเหตุ</div>
               </th>
               <th style="min-width: 150px">
-                <div class="flex align-items-center">Action</div>
+                <div>Action</div>
               </th>
               <th></th>
             </tr>
@@ -122,7 +122,7 @@ import { AccountsComponent } from './accounts.component';
                     pTooltip="แก้ไข"
                     (click)="showDialog(account)"
                     tooltipPosition="bottom"
-                    class="pi pi-pen-to-square mr-2 ml-2 text-orange-600"
+                    class="pi pi-pen-to-square mx-2 text-orange-600"
                   ></i>
                   <p-confirmPopup />
                   <i
@@ -147,12 +147,22 @@ import { AccountsComponent } from './accounts.component';
             </tr>
           </ng-template>
           <ng-template pTemplate="summary">
-            <div class="flex align-items-center justify-content-around">
-              <span class="text-green-400 sarabun font-bold ">
-                รวม: {{ account ? account.length : 0 }} รายการ.
+            <div
+              class="flex align-items-center justify-content-around sarabun font-bold"
+            >
+              <span>
+                รวม:
+                <span class="text-orange-400 mx-3">
+                  {{ account ? account.length : 0 }}
+                </span>
+                รายการ.
               </span>
-              <span class="text-orange-500 sarabun font-bold ">
-                เป็นเงิน: {{ getTotal() | currency: '' : '' }} บาท
+              <span>
+                เป็นเงิน:
+                <span class="text-orange-400 mx-3">
+                  {{ getTotal() | currency: '' : '' }}
+                </span>
+                บาท
               </span>
             </div>
           </ng-template>
@@ -179,7 +189,6 @@ export class AccountBetweenDetailComponent {
 
   account!: Account[];
   title: string = '';
-  dumDetail = '';
 
   results$: Observable<any> = new Observable();
 
@@ -288,7 +297,7 @@ export class AccountBetweenDetailComponent {
     });
     this.ref.onClose.subscribe((data: any) => {
       if (data) {
-        this.resultDetails(this.dumDetail);
+        this.resultDetails(this.title);
       }
     });
   }
@@ -299,6 +308,6 @@ export class AccountBetweenDetailComponent {
   }
 
   onSelect() {
-    // nothing todo.
+    // nothing todos.
   }
 }

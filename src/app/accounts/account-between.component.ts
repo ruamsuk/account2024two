@@ -58,7 +58,7 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
               <span class="text-yellow-300">
                 รายจ่าย <span class="mx-3"> ยอดคงเหลือ: </span>
               </span>
-              <span class="text-red-300 tasadith text-xl">
+              <span class="text-red-300 text-xl">
                 {{ calculateBalance() | currency: '' : '' }} </span
               ><span class="text-yellow-300">บาท</span>
             </div>
@@ -110,12 +110,22 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
             </tr>
           </ng-template>
           <ng-template pTemplate="summary">
-            <div class="flex align-items-center justify-content-around">
-              <span class="text-green-400 sarabun font-bold ">
-                รวม: {{ accountExp ? accountExp.length : 0 }} รายการ.
+            <div
+              class="flex align-items-center justify-content-around tasadith font-bold text-xl"
+            >
+              <span>
+                รวม:
+                <span class="text-orange-300 mx-3">
+                  {{ accountExp ? accountExp.length : 0 }}
+                </span>
+                รายการ.
               </span>
-              <span class="text-orange-500 sarabun font-bold ">
-                เป็นเงิน: {{ totalExpenses | currency: '' : '' }} บาท
+              <span>
+                เป็นเงิน:
+                <span class="text-orange-300 mx-3">
+                  {{ totalExpenses | currency: '' : '' }}
+                </span>
+                บาท
               </span>
             </div>
           </ng-template>
@@ -187,12 +197,22 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
             </tr>
           </ng-template>
           <ng-template pTemplate="summary">
-            <div class="flex align-items-center justify-content-around">
-              <span class="text-green-400 sarabun font-bold ">
-                รวม: {{ accountIncome ? accountIncome.length : 0 }} รายการ.
+            <div
+              class="flex align-items-center justify-content-around tasadith font-bold text-xl"
+            >
+              <span>
+                รวม:
+                <span class="text-green-400 mx-3">
+                  {{ accountIncome ? accountIncome.length : 0 }}
+                </span>
+                รายการ.
               </span>
-              <span class="text-orange-500 sarabun font-bold ">
-                เป็นเงิน: {{ totalIncome | currency: '' : '' }} บาท
+              <span>
+                เป็นเงิน:
+                <span class="text-orange-300 mx-3">
+                  {{ totalIncome | currency: '' : '' }}
+                </span>
+                บาท
               </span>
             </div>
           </ng-template>

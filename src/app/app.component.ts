@@ -144,7 +144,7 @@ export class AppComponent implements OnInit, OnDestroy {
             route: '/account/between',
           },
           {
-            label: 'เวลา&รายละเอียด',
+            label: 'ช่วงเวลาและรายการ',
             icon: 'pi pi-calendar-plus',
             route: '/account/between-detail',
           },
@@ -162,7 +162,7 @@ export class AppComponent implements OnInit, OnDestroy {
           {
             label: 'รายการเครดิต',
             icon: 'pi pi-list',
-            route: '/credits',
+            route: '/credit/credit-list',
           },
           {
             label: 'ตามช่วงเวลา',
@@ -183,17 +183,17 @@ export class AppComponent implements OnInit, OnDestroy {
           {
             label: 'Blood List',
             icon: 'pi pi-list',
-            route: '/bloods',
+            route: '/bloods/blood-list',
           },
           {
             label: 'Time period',
             icon: 'pi pi-calendar-clock',
-            route: '/blood/blood-time-period',
+            route: '/bloods/blood-time-period',
           },
           {
             label: 'Year period',
             icon: 'pi pi-calendar-plus',
-            route: '/blood/blood-year-period',
+            route: '/bloods/blood-year-period',
           },
         ],
       },
