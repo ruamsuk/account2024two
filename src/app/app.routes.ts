@@ -124,6 +124,12 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'monthly',
+    ...canActivate(redirectUnauthorizedToLogin),
+    loadComponent: () =>
+      import('./monthly/monthly.component').then((m) => m.MonthlyComponent),
+  },
+  {
     path: '',
     pathMatch: 'full',
     redirectTo: 'home',

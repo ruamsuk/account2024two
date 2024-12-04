@@ -204,7 +204,7 @@ export class AppComponent implements OnInit, OnDestroy {
           {
             label: 'แสดงวันที่กำหนด',
             icon: 'pi pi-book',
-            route: 'monthly',
+            route: '/monthly',
           },
         ],
       },

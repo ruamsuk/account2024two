@@ -84,7 +84,7 @@ export class AccountService {
       where('date', '>=', start),
       where('date', '<=', end),
       where('details', '>=', description),
-      where('details', '<=', description),
+      where('details', '<=', description + '\uf8ff'),
       orderBy('date', 'desc'),
     );
     return collectionData(q, { idField: 'id' });
