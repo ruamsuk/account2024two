@@ -1,11 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  HostListener,
-  inject,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, inject, OnDestroy, OnInit, } from '@angular/core';
 import { CreditService } from '../services/credit.service';
 import { MessagesService } from '../services/messages.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -18,6 +11,7 @@ import { CreditComponent } from './credit.component';
 import { Table } from 'primeng/table';
 import { CreditDetailComponent } from './credit-detail.component';
 import { AuthService } from '../services/auth.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-credit-list',
@@ -27,7 +21,7 @@ import { AuthService } from '../services/auth.service';
     <div class="table-container align-items-center justify-content-center mt-3">
       @if (loading) {
         <div class="loading-shade">
-          <p-progressSpinner strokeWidth="4" ariaLabel="loading" />
+          <p-progressSpinner strokeWidth="4" ariaLabel="loading"/>
         </div>
       }
       <div class="card">
@@ -63,7 +57,7 @@ import { AuthService } from '../services/auth.service';
                 <input
                   class="sarabun"
                   pInputText
-                  [(ngModel)]="searchValue"
+                  [formControl]="searchValue"
                   pTooltip="หารายการ หรือหมายเหตุ"
                   tooltipPosition="bottom"
                   placeholder="ค้นหา .."
@@ -140,7 +134,7 @@ import { AuthService } from '../services/auth.service';
                     tooltipPosition="bottom"
                     class="pi pi-pen-to-square text-orange-600 mx-3"
                   ></i>
-                  <p-confirmPopup />
+                  <p-confirmPopup/>
                   <i
                     pTooltip="ลบข้อมูล"
                     (click)="conf($event, credit.id)"
@@ -187,7 +181,7 @@ export class CreditListComponent implements OnInit, OnDestroy {
 
   dialogService = inject(DialogService);
   ref: DynamicDialogRef | undefined;
-  searchValue: string | undefined;
+  searchValue = new FormControl();
 
   currentPage = 0;
   rowsPerPage = 10;
@@ -256,7 +250,7 @@ export class CreditListComponent implements OnInit, OnDestroy {
       data: credit,
       header: header,
       width: '360px',
-      contentStyle: { overflow: 'auto' },
+      contentStyle: {overflow: 'auto'},
       breakpoints: {
         '960px': '360px',
         '640px': '360px',
@@ -270,7 +264,7 @@ export class CreditListComponent implements OnInit, OnDestroy {
       data: credit,
       header: 'รายละเอียดเครดิต',
       width: '360px',
-      contentStyle: { overflow: 'auto' },
+      contentStyle: {overflow: 'auto'},
       breakpoints: {
         '960px': '360px',
         '640px': '360px',
@@ -300,7 +294,7 @@ export class CreditListComponent implements OnInit, OnDestroy {
 
   clear(table: Table) {
     table.clear();
-    this.searchValue = '';
+    this.searchValue.reset();
   }
 
   ngOnDestroy(): void {

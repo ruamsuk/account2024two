@@ -1,23 +1,10 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  inject,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit, } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { ConfirmationService } from 'primeng/api';
 import { MessagesService } from '../services/messages.service';
-import {
-  combineLatest,
-  finalize,
-  Observable,
-  of,
-  startWith,
-  switchMap,
-} from 'rxjs';
+import { combineLatest, finalize, Observable, of, startWith, switchMap, } from 'rxjs';
 import { SelectorService } from '../services/selector.service';
 import { CreditService } from '../services/credit.service';
 import { MonthSummary } from '../models/credit.model';
@@ -82,7 +69,7 @@ import { AuthService } from '../services/auth.service';
         >
           @if (loading) {
             <div class="loading-shade">
-              <p-progressSpinner strokeWidth="4" ariaLabel="loading" />
+              <p-progressSpinner strokeWidth="4" ariaLabel="loading"/>
             </div>
           }
           <div class="card">
@@ -105,7 +92,7 @@ import { AuthService } from '../services/auth.service';
                       {{ searchMonth }} : {{ searchYear }}
                     </span>
                   </span>
-                  <p-button icon="pi pi-plus" (onClick)="showDialog('')" />
+                  <p-button icon="pi pi-plus" (onClick)="showDialog('')"/>
                 </div>
               </ng-template>
               <ng-template pTemplate="header">
@@ -155,7 +142,7 @@ import { AuthService } from '../services/auth.service';
                         tooltipPosition="bottom"
                         class="pi pi-pen-to-square mx-3 text-blue-400"
                       ></i>
-                      <p-confirmPopup />
+                      <p-confirmPopup/>
                       <i
                         pTooltip="ลบข้อมูล"
                         (click)="conf($event, credit.id)"
@@ -237,11 +224,11 @@ export class CreditBetweenComponent implements OnDestroy, OnInit {
   rowsPerPage = 10;
 
   cols: any[] = [
-    { field: 'index', header: 'ลำดับ' },
-    { field: 'date', header: 'วัน' },
-    { field: 'details', header: 'รายการ' },
-    { field: 'expense', header: 'รายจ่าย', pipe: 'currency' },
-    { field: 'remark', header: 'หมายเหตุ' },
+    {field: 'index', header: 'ลำดับ'},
+    {field: 'date', header: 'วัน'},
+    {field: 'details', header: 'รายการ'},
+    {field: 'expense', header: 'รายจ่าย', pipe: 'currency'},
+    {field: 'remark', header: 'หมายเหตุ'},
   ];
 
   constructor(
@@ -250,7 +237,8 @@ export class CreditBetweenComponent implements OnDestroy, OnInit {
     private monthConversionService: MonthConversionService,
     private dialogService: DialogService,
     private confirmService: ConfirmationService,
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.getRole();
@@ -264,7 +252,8 @@ export class CreditBetweenComponent implements OnDestroy, OnInit {
     });
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+  }
 
   search() {
     // updated
@@ -280,7 +269,7 @@ export class CreditBetweenComponent implements OnDestroy, OnInit {
 
     if (monthNumber === undefined) {
       console.error('Invalid month name:', this.selectMonth.value.label);
-      return of({ expense: 0, cashback: 0, transactions: [] });
+      return of({expense: 0, cashback: 0, transactions: []});
     }
 
     this.creditSummary$ = combineLatest([
@@ -322,11 +311,6 @@ export class CreditBetweenComponent implements OnDestroy, OnInit {
     return summary.expense - summary.cashback;
   }
 
-  clearInput() {
-    this.selectYear.reset();
-    this.selectMonth.reset();
-  }
-
   showDialog(credit: any) {
     let header: string;
     if (credit) {
@@ -338,7 +322,7 @@ export class CreditBetweenComponent implements OnDestroy, OnInit {
       data: credit,
       header: header,
       width: '360px',
-      contentStyle: { overflow: 'auto' },
+      contentStyle: {overflow: 'auto'},
       breakpoints: {
         '960px': '360px',
         '640px': '360px',
@@ -388,9 +372,9 @@ export class CreditBetweenComponent implements OnDestroy, OnInit {
     year: number,
   ): { month: number; year: number } {
     if (month === 1) {
-      return { month: 12, year: year - 1 };
+      return {month: 12, year: year - 1};
     } else {
-      return { month: month - 1, year };
+      return {month: month - 1, year};
     }
   }
 }
