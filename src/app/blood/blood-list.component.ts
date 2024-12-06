@@ -180,17 +180,6 @@ import { AuthService } from '../services/auth.service';
     </div>
   `,
   styles: `
-    //td {
-    //  font-family: 'Sarabun', sans-serif !important;
-    //  color: #a3a1a1;
-    //}
-    //
-    //.icons {
-    //  position: relative;
-    //  right: 30px;
-    //  //top: 10px;
-    //}
-
     .high-bp {
       color: red;
     }

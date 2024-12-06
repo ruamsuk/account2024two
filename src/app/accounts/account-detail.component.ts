@@ -67,6 +67,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
     </div>
   `,
   styles: `
+    /** อันนี้ต้องคงไว้ */
     table {
       border-collapse: collapse;
       font-family: 'Sarabun', sans-serif;

@@ -290,9 +290,9 @@ export class AccountBetweenDetailComponent {
       width: '360px',
       contentStyle: { overflow: 'auto' },
       breakpoints: {
-        '960px': '85vw',
-        '640px': '95vw',
-        '390px': '95vw',
+        '960px': '360px',
+        '640px': '360px',
+        '390px': '360px',
       },
     });
     this.ref.onClose.subscribe((data: any) => {

@@ -86,7 +86,7 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
                     pTooltip="แก้ไข"
                     (click)="showDialog(account)"
                     tooltipPosition="bottom"
-                    class="pi pi-pen-to-square mr-2 ml-2 text-orange-600"
+                    class="pi pi-pen-to-square mx-2 text-orange-600"
                   ></i>
                   <p-confirmPopup />
                   <i

@@ -35,6 +35,7 @@ import { PrintDialogComponent } from './print-dialog.component';
                 inputId="icondisplay"
                 name="date"
                 appendTo="body"
+                dateFormat="d M yy"
                 (onSelect)="onSelect()"
                 [readonlyInput]="true"
               ></p-calendar>
@@ -190,12 +191,7 @@ export class BloodTimePeriodComponent implements OnDestroy, OnInit {
       const end = this.selectedDates[1];
       const starter = new Date(start);
       const ender = new Date(end);
-      // console.log(
-      //   'Selected date range: ',
-      //   starter.toISOString(),
-      //   ' to ',
-      //   ender.toISOString(),
-      // );
+
       this.loading = true;
       this.bloodPressureRecords$ = this.bloodService.getBloodsByDateRange(
         starter,

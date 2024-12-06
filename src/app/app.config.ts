@@ -11,11 +11,24 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
-import { provideHttpClient } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import {
   NgxCurrencyInputMode,
   provideEnvironmentNgxCurrency,
 } from 'ngx-currency';
+import {
+  initializeAppCheck,
+  provideAppCheck,
+  ReCaptchaV3Provider,
+} from '@angular/fire/app-check';
+import { AuthTokenHttpInterceptorProvider } from './http_interceptors/auth-token.interceptor';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import firebase from 'firebase/compat/app';
+
+firebase.initializeApp(environment.firebaseConfig);
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -27,7 +40,19 @@ export const appConfig: ApplicationConfig = {
     provideFirestore(() => getFirestore()),
     provideFunctions(() => getFunctions()),
     provideStorage(() => getStorage()),
-    provideHttpClient(),
+    provideHttpClient(withInterceptorsFromDi()),
+    AuthTokenHttpInterceptorProvider,
+    {
+      provide: FIREBASE_OPTIONS,
+      useValue: initializeApp,
+    },
+    provideAppCheck(() => {
+      const provider = new ReCaptchaV3Provider(environment.recaptcha3SiteKey);
+      return initializeAppCheck(undefined, {
+        provider,
+        isTokenAutoRefreshEnabled: true,
+      });
+    }),
     provideEnvironmentNgxCurrency({
       align: 'right',
       allowNegative: true,

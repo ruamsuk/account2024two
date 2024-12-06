@@ -215,7 +215,7 @@ export class AppComponent implements OnInit, OnDestroy {
           {
             label: 'Users list',
             icon: 'pi pi-users',
-            route: 'manage-user',
+            route: '/manage-user',
           },
         ],
       },

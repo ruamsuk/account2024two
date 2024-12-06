@@ -9,15 +9,18 @@ import {
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
   user,
   User,
   UserCredential,
 } from '@angular/fire/auth';
 import { ProfileUser } from '../models/profile-user.model';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { from, Observable, of } from 'rxjs';
+import { concatMap, from, Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { auth } from 'firebase-admin';
+import UserInfo = auth.UserInfo;
 
 @Injectable({
   providedIn: 'root',
@@ -110,5 +113,16 @@ export class AuthService {
     } else {
       return false;
     }
+  }
+
+  updateProfile(profileData: Partial<UserInfo>): Observable<any> {
+    const user = this.auth.currentUser;
+
+    return of(user).pipe(
+      concatMap((user) => {
+        if (!user) throw new Error('Not Authenticated');
+        return updateProfile(user, profileData);
+      }),
+    );
   }
 }
