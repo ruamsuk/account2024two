@@ -6,6 +6,8 @@ import { BloodService } from '../services/blood.service';
 import { BloodPressure } from '../models/blood-pressure.model';
 import { ThaiDatePipe } from '../pipe/thai-date.pipe';
 import { PrintDialogComponent } from './print-dialog.component';
+import { FormControl } from '@angular/forms';
+import { MessagesService } from '../services/messages.service';
 
 @Component({
   selector: 'app-blood-time-period',
@@ -15,7 +17,7 @@ import { PrintDialogComponent } from './print-dialog.component';
     <div class="flex justify-content-center align-items-center h-15rem -mt-4">
       @if (loading) {
         <div class="loading-shade">
-          <p-progressSpinner strokeWidth="4" ariaLabel="loading" />
+          <p-progressSpinner strokeWidth="4" ariaLabel="loading"/>
         </div>
       }
       <p-card [style]="{ 'min-width': '30vw' }">
@@ -28,7 +30,7 @@ import { PrintDialogComponent } from './print-dialog.component';
           <div class="flex">
             <div class="flex align-items-center justify-content-center w-full">
               <p-calendar
-                [(ngModel)]="selectedDates"
+                [formControl]="selectedDates"
                 [iconDisplay]="'input'"
                 [showIcon]="true"
                 selectionMode="range"
@@ -82,18 +84,18 @@ import { PrintDialogComponent } from './print-dialog.component';
                     style="width: 20%"
                     class="text-center text-green-400"
                   >
-                    Morning<br /><span class="text-gray-600"
-                      >(Before medicine)</span
-                    >
+                    Morning<br/><span class="text-gray-600"
+                  >(Before medicine)</span
+                  >
                   </th>
                   <th
                     colspan="2"
                     style="width: 20%"
                     class="text-center text-yellow-400"
                   >
-                    Evening<br /><span class="text-gray-600"
-                      >(After medicine )</span
-                    >
+                    Evening<br/><span class="text-gray-600"
+                  >(After medicine )</span
+                  >
                   </th>
                   <th></th>
                 </tr>
@@ -132,7 +134,7 @@ import { PrintDialogComponent } from './print-dialog.component';
                         class="pi pi-pen-to-square mr-2 ml-2 text-blue-400"
                         (click)="showDialog(blood)"
                       ></i>
-                      <p-confirmPopup />
+                      <p-confirmPopup/>
                       <i class="pi pi-trash mr-2 ml-2 text-orange-600"></i>
                     } @else {
                       <i class="pi pi-lock text-100"></i>
@@ -168,7 +170,7 @@ import { PrintDialogComponent } from './print-dialog.component';
 })
 export class BloodTimePeriodComponent implements OnDestroy, OnInit {
   ref: DynamicDialogRef | undefined;
-  selectedDates: Date[] | undefined;
+  selectedDates = new FormControl();
   bloodPressureRecords$: Observable<BloodPressure[]> | undefined;
   loading: boolean = false;
   admin: boolean = false;
@@ -176,21 +178,35 @@ export class BloodTimePeriodComponent implements OnDestroy, OnInit {
   constructor(
     private dialogService: DialogService,
     private bloodService: BloodService,
-  ) {}
+    private message: MessagesService,
+  ) {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   onSelect() {
+    const selectedDates = this.selectedDates.value;
     if (
-      this.selectedDates &&
-      this.selectedDates.length === 2 &&
-      this.selectedDates[0] &&
-      this.selectedDates[1]
+      selectedDates &&
+      selectedDates.length === 2 &&
+      selectedDates[0] &&
+      selectedDates[1]
     ) {
-      const start = this.selectedDates[0];
-      const end = this.selectedDates[1];
+      const start = selectedDates[0];
+      const end = selectedDates[1];
       const starter = new Date(start);
       const ender = new Date(end);
+
+      /** avoid same date or end less than begin */
+      if (starter >= ender) {
+        this.message.addMessage(
+          'error',
+          'Error',
+          'วันเริ่มต้นกับวันสิ้นสุดต้องคนละวันกัน',
+        );
+        return;
+      }
 
       this.loading = true;
       this.bloodPressureRecords$ = this.bloodService.getBloodsByDateRange(
@@ -209,7 +225,7 @@ export class BloodTimePeriodComponent implements OnDestroy, OnInit {
 
   showDialog(blood: any) {
     this.ref = this.dialogService.open(PrintDialogComponent, {
-      data: { blood },
+      data: {blood},
       header: 'Blood Pressure Print',
       width: '700px',
       breakpoints: {
