@@ -64,7 +64,7 @@ import { FormControl } from '@angular/forms';
                   type="text"
                   (input)="tb.filterGlobal(getValue($event), 'contains')"
                 />
-                @if (searchValue) {
+                @if (searchValue.value) {
                   <span class="icons" (click)="clear(tb)">
                     <i class="pi pi-times" style="font-size: 1rem"></i>
                   </span>

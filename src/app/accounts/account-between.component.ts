@@ -18,7 +18,7 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
   template: `
     @if (loading) {
       <div class="loading-shade">
-        <p-progressSpinner strokeWidth="4" ariaLabel="loading" />
+        <p-progressSpinner strokeWidth="4" ariaLabel="loading"/>
       </div>
     }
     <div class="card flex flex-wrap p-fluid">
@@ -88,7 +88,7 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
                     tooltipPosition="bottom"
                     class="pi pi-pen-to-square mx-2 text-orange-600"
                   ></i>
-                  <p-confirmPopup />
+                  <p-confirmPopup/>
                   <i
                     pTooltip="ลบข้อมูล"
                     (click)="conf_($event, account.id)"
@@ -103,7 +103,7 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
             <tr>
               <td
                 colspan="6"
-                class="text-center text-orange-400 text-xl font-bold sarabun"
+                class="text-center text-orange-400 text-xl sm:text-base font-bold sarabun"
               >
                 ไม่พบข้อมูลรายจ่าย
               </td>
@@ -111,7 +111,7 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
           </ng-template>
           <ng-template pTemplate="summary">
             <div
-              class="flex align-items-center justify-content-around tasadith font-bold text-xl"
+              class="flex align-items-center justify-content-around tasadith font-bold text-xl sm:text-base"
             >
               <span>
                 รวม:
@@ -144,10 +144,10 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
         >
           <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
-              <span class="text-orange-400 font-bold text-2xl tasadith"
-                >รายรับ</span
+              <span class="text-orange-400 font-bold text-2xl tasadith sm:text-base"
+              >รายรับ</span
               >
-              <p-button icon="pi pi-refresh" />
+              <p-button icon="pi pi-refresh"/>
             </div>
           </ng-template>
           <ng-template pTemplate="header" let-columns>
@@ -175,7 +175,7 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
                     tooltipPosition="bottom"
                     class="pi pi-pen-to-square mr-2 ml-2 text-orange-600"
                   ></i>
-                  <p-confirmPopup />
+                  <p-confirmPopup/>
                   <i
                     pTooltip="ลบข้อมูล"
                     (click)="conf_($event, accountIn.id)"
@@ -349,7 +349,7 @@ export class AccountBetweenComponent {
       data: account,
       header: header,
       width: '360px',
-      contentStyle: { overflow: 'auto' },
+      contentStyle: {overflow: 'auto'},
       breakpoints: {
         '960px': '360px',
         '640px': '360px',

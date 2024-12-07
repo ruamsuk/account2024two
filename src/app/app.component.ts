@@ -1,10 +1,4 @@
-import {
-  Component,
-  HostListener,
-  inject,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, HostListener, inject, OnDestroy, OnInit, } from '@angular/core';
 import { Router } from '@angular/router';
 import { SharedModule } from './shared/shared.module';
 import { AuthService } from './services/auth.service';
@@ -19,12 +13,12 @@ import { FooterComponent } from './pages/footer.component';
   standalone: true,
   imports: [SharedModule, FooterComponent],
   template: `
-    <p-toast />
+    <p-toast/>
     @if (currentUser()) {
       <div class="card">
         <p-menubar [model]="items">
           <ng-template pTemplate="start">
-            <img src="/images/primeng-logo.png" alt="logo" />
+            <img src="/images/primeng-logo.png" alt="logo"/>
           </ng-template>
           <ng-template pTemplate="item" let-item>
             <ng-container>
@@ -56,16 +50,16 @@ import { FooterComponent } from './pages/footer.component';
                 }}
                 <i class="pi pi-angle-down"></i>
               </span>
-              <p-tieredMenu #menu [model]="subitems" [popup]="true" />
+              <p-tieredMenu #menu [model]="subitems" [popup]="true"/>
             </div>
           </ng-template>
         </p-menubar>
       </div>
     }
     <div class="app-container">
-      <router-outlet />
+      <router-outlet/>
     </div>
-    <app-footer />
+    <app-footer/>
   `,
   styles: [
     `
@@ -105,7 +99,8 @@ export class AppComponent implements OnInit, OnDestroy {
   ref: DynamicDialogRef | undefined;
   currentUser = this.auth.currentUser;
 
-  constructor() {}
+  constructor() {
+  }
 
   @HostListener('window:mousemove')
   @HostListener('window:keydown')
@@ -238,6 +233,17 @@ export class AppComponent implements OnInit, OnDestroy {
         icon: 'pi pi-sign-out',
         command: () => this.logout(),
       },
+      {
+        label: 'Help',
+        icon: 'pi pi-question',
+        command: () => {
+          this.message.addMessage(
+            'info',
+            'Help message',
+            'This is a help message',
+          );
+        },
+      }
     ];
   }
 
@@ -247,7 +253,7 @@ export class AppComponent implements OnInit, OnDestroy {
       header: 'User Details',
       width: '500px',
       modal: true,
-      contentStyle: { overflow: 'auto' },
+      contentStyle: {overflow: 'auto'},
       breakpoints: {
         '960px': '500px',
         '640px': '500px',

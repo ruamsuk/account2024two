@@ -10,6 +10,7 @@ import { UserEditComponent } from '../user-edit.component';
 import { Table } from 'primeng/table';
 import { NgOptimizedImage } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-user-list',
@@ -22,7 +23,7 @@ import { AuthService } from '../../services/auth.service';
       >
         @if (loading) {
           <div class="loading-shade">
-            <p-progressSpinner strokeWidth="4" ariaLabel="loading" />
+            <p-progressSpinner strokeWidth="4" ariaLabel="loading"/>
           </div>
         }
         <div class="card">
@@ -58,14 +59,14 @@ import { AuthService } from '../../services/auth.service';
                   <input
                     class="sarabun"
                     pInputText
-                    [(ngModel)]="searchValue"
+                    [formControl]="searchValue"
                     pTooltip="หารายการ หรือหมายเหตุ"
                     tooltipPosition="bottom"
                     placeholder="ค้นหา .."
                     type="text"
                     (input)="dt.filterGlobal(getValue($event), 'contains')"
                   />
-                  @if (searchValue) {
+                  @if (searchValue.value) {
                     <span class="icons cursor-pointer" (click)="clear(dt)">
                       <i class="pi pi-times" style="font-size: 1rem"></i>
                     </span>
@@ -112,7 +113,7 @@ import { AuthService } from '../../services/auth.service';
                       class="pi pi-pen-to-square mr-2 ml-2 text-blue-400"
                       (click)="addEditUser(user)"
                     ></i>
-                    <p-confirmPopup />
+                    <p-confirmPopup/>
                     <i
                       class="pi pi-trash mr-2 ml-2 text-orange-600"
                       (click)="conf($event, user)"
@@ -161,7 +162,7 @@ import { AuthService } from '../../services/auth.service';
 export class UserListComponent implements OnInit {
   ref: DynamicDialogRef | undefined;
   loading = false;
-  searchValue: string | undefined;
+  searchValue = new FormControl();
   users: User[] = [];
   admin: boolean = false;
   currentPage = 0;
@@ -179,7 +180,8 @@ export class UserListComponent implements OnInit {
     this.loadUser();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   getValue(event: Event): string {
     return (event.target as HTMLInputElement).value;
@@ -226,7 +228,7 @@ export class UserListComponent implements OnInit {
       data: user,
       header: header,
       width: '360px',
-      contentStyle: { overflow: 'auto' },
+      contentStyle: {overflow: 'auto'},
       breakpoints: {
         '960px': '360px',
         '640px': '360px',
@@ -292,6 +294,6 @@ export class UserListComponent implements OnInit {
 
   clear(table: Table) {
     table.clear();
-    this.searchValue = '';
+    this.searchValue.reset();
   }
 }

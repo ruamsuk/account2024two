@@ -46,9 +46,9 @@ import { NgOptimizedImage } from '@angular/common';
         </div>
       </div>
 
-      <hr class="h-px bg-gray-200 border-0" />
+      <hr class="h-px bg-gray-200 border-0"/>
       <form [formGroup]="userForm" (ngSubmit)="saveUser()">
-        <input type="hidden" />
+        <input type="hidden"/>
         <div class="field">
           <label for="displayName">DisplayName</label>
           <input
@@ -101,12 +101,12 @@ import { NgOptimizedImage } from '@angular/common';
             (completeMethod)="filterRoles($event)"
             optionLabel="name"
             placeholder="Select roles"
-            class="w-full"
+            styleClass="w-full"
             appendTo="body"
           />
         </div>
         <div class="field">
-          <hr class="h-px bg-gray-200 border-0" />
+          <hr class="h-px bg-gray-200 border-0"/>
           <div class="flex mt-2 mb-1">
             <p-button
               label="Cancel"
@@ -158,7 +158,7 @@ import { NgOptimizedImage } from '@angular/common';
 export class UserEditComponent implements OnInit, OnDestroy {
   userForm: FormGroup;
   user: any;
-  roles: any[] = [{ name: 'admin' }, { name: 'manager' }, { name: 'user' }];
+  roles: any[] = [{name: 'admin'}, {name: 'manager'}, {name: 'user'}];
   filteredRoles: any[] = [];
   previewUrl: string | ArrayBuffer | null = null;
   private userUpdatedSub!: Subscription;
@@ -186,7 +186,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
       const data = this.config.data;
       if (data) {
         this.user = data;
-        this.userForm.patchValue({ ...data });
+        this.userForm.patchValue({...data});
         // console.log(JSON.stringify(this.user, null, 2));
       }
     }
@@ -202,7 +202,8 @@ export class UserEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   filterRoles(event: any) {
     // กรองข้อมูลตาม query ที่ผู้ใช้พิมพ์
@@ -238,16 +239,16 @@ export class UserEditComponent implements OnInit, OnDestroy {
       this.userUpdatedSub = (
         userData.profileImage
           ? this.imageService
-              .uploadImage(
-                userData.profileImage,
-                `images/profile/${userData.uid}`,
-              )
-              .pipe(
-                concatMap((photoURL) =>
-                  this.userService.updatePhotoURL(userData.uid, photoURL),
-                ),
-                concatMap(() => this.userService.edit(fakeData)),
-              )
+            .uploadImage(
+              userData.profileImage,
+              `images/profile/${userData.uid}`,
+            )
+            .pipe(
+              concatMap((photoURL) =>
+                this.userService.updatePhotoURL(userData.uid, photoURL),
+              ),
+              concatMap(() => this.userService.edit(fakeData)),
+            )
           : this.userService.edit(fakeData)
       ).subscribe({
         next: () => {
@@ -309,7 +310,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
   onFileSelected(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
-      this.userForm.patchValue({ profileImage: file });
+      this.userForm.patchValue({profileImage: file});
       this.userForm.get('profileImage')?.updateValueAndValidity();
 
       const reader = new FileReader();
