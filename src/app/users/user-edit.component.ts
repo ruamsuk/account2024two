@@ -6,11 +6,12 @@ import { SharedModule } from '../shared/shared.module';
 import { ImageUploadService } from '../services/image-upload.service';
 import { MessagesService } from '../services/messages.service';
 import { concatMap, of, Subscription } from 'rxjs';
+import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-user-edit',
   standalone: true,
-  imports: [SharedModule],
+  imports: [SharedModule, NgOptimizedImage],
   template: `
     <div>
       <!--/ การเปลี่ยนภาพและรายละเอียดอื่น ทำได้แล้ว เย้ๆ -->
