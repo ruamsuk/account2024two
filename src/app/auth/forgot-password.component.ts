@@ -12,11 +12,11 @@ import { SharedModule } from '../shared/shared.module';
   imports: [SharedModule],
   template: `
     <div class="flex justify-content-center align-content-center">
-      <input
-        pInputText
-        type="email"
-        [formControl]="emailForgotPassword"
-        placeholder="กรอกอีเมล์ที่ลงทะเบียนไว้"
+      <input class="w-full"
+             pInputText
+             type="email"
+             [formControl]="emailForgotPassword"
+             placeholder="กรอกอีเมล์ที่ลงทะเบียนไว้"
       />
     </div>
     <div class="flex justify-content-center align-content-center gap-3 mt-3">
@@ -50,7 +50,8 @@ export class ForgotPasswordComponent {
     private authService: AuthService,
     private messageService: MessagesService,
     private dialogRef: DynamicDialogRef,
-  ) {}
+  ) {
+  }
 
   forgotPassword() {
     if (this.emailForgotPassword.value == null) {

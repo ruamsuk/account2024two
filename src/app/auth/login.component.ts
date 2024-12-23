@@ -19,7 +19,7 @@ import { CheckboxModule } from 'primeng/checkbox';
         <form [formGroup]="loginForm" (ngSubmit)="login()">
           <p-card [style]="{ width: '360px' }">
             <div class="text-center text-3xl -mt-4">
-              <img src="/images/primeng-logo.png" alt="logo" />
+              <img src="/images/primeng-logo.png" alt="logo"/>
               <div class="text-900 text-2xl font-medium mb-3">ruamsuk acc.</div>
             </div>
             <ng-template pTemplate="p-card-content">
@@ -46,7 +46,7 @@ import { CheckboxModule } from 'primeng/checkbox';
               <div class="field">
                 @if (isValidPassword) {
                   <label [ngClass]="{ 'p-error': isValidPassword }"
-                    >Password</label
+                  >Password</label
                   >
                 } @else {
                   <label>Password</label>
@@ -152,7 +152,7 @@ export class LoginComponent implements OnDestroy {
 
   login(): void {
     this.load(true);
-    const { email, password } = this.loginForm.value;
+    const {email, password} = this.loginForm.value;
 
     if (!this.loginForm.valid || !email || !password) {
       return;
@@ -188,10 +188,10 @@ export class LoginComponent implements OnDestroy {
       header: 'Forgot your password',
       width: '350px',
       modal: true,
-      contentStyle: { overflow: 'auto' },
+      contentStyle: {overflow: 'auto'},
       breakpoints: {
-        '960px': '40vw',
-        '640px': '35vw',
+        '960px': '350px',
+        '640px': '350px',
       },
     });
   }

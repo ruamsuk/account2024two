@@ -83,14 +83,14 @@ import { NgOptimizedImage } from '@angular/common';
             [inputStyle]="{ width: '100%' }"
             [toggleMask]="true"
           />
-          <small
-            class="block p-error pl-2 font-semibold"
-            *ngIf="isValidPassword as messages"
-          >
-            {{ messages }}
-          </small>
+          @if (isValidPassword; as messages) {
+            <small
+              class="block p-error pl-2 font-semibold"
+            >
+              {{ messages }}
+            </small>
+          }
         </div>
-
         <div class="field">
           <label for="role">Role</label>
           <p-autoComplete
