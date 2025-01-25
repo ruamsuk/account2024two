@@ -261,8 +261,8 @@ export class AppComponent implements OnInit, OnDestroy {
     });
   }
 
-  logout(): void {
-    this.auth.logout().then(() => this.router.navigateByUrl('/auth/login'));
+ async logout(): Promise<void> {
+   await this.auth.logout().then(() => this.router.navigateByUrl('/auth/login'));
   }
 
   ngOnDestroy() {
