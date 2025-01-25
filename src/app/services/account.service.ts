@@ -30,7 +30,7 @@ export class AccountService {
   }
 
   addAccount(account: any) {
-    if (account.amount === 'string') {
+    if (typeof account.amount === 'string') {
       const number = account.amount.replace(/[^0-9]/g, '');
       account.amount = parseFloat(number);
     }
@@ -54,11 +54,10 @@ export class AccountService {
   }
 
   updateAccount(account: any) {
-    if (account.amount === 'string') {
+    if (typeof account.amount === 'string') {
       const number = account.amount.replace(/[^0-9]/g, '');
       account.amount = parseFloat(number);
     }
-    console.log(JSON.stringify(account, null, 2));
     const ref = doc(this.firestore, 'accounts', `${account.id}`);
     return from(updateDoc(ref, { ...account, modify: new Date() }));
   }
