@@ -15,8 +15,8 @@ import { Account } from '../models/account.model';
 import { AuthService } from '../services/auth.service';
 import { SharedModule } from '../shared/shared.module';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ThaiDatePipe } from '../pipe/thai-date.pipe';
 import { AccountsComponent } from './accounts.component';
+import { ThaiDatePipe } from '../pipe/thai-date.pipe';
 
 @Component({
   selector: 'app-account-between-detail',
@@ -25,11 +25,11 @@ import { AccountsComponent } from './accounts.component';
   template: `
     @if (loading) {
       <div class="loading-shade">
-        <p-progressSpinner strokeWidth="4" ariaLabel="loading" />
+        <p-progressSpinner strokeWidth="4" ariaLabel="loading"/>
       </div>
     }
     <div
-      class="flex flex-wrap p-fluid justify-content-center align-items-center mt-2"
+            class="flex flex-wrap p-fluid justify-content-center align-items-center mt-2"
     >
       <p-card>
         <div class="text-center tasadith text-base md:text-2xl -mt-3 mb-2">
@@ -37,31 +37,31 @@ import { AccountsComponent } from './accounts.component';
         </div>
         <div class="flex-grow-1 flex align-items-center justify-content-center">
           <p-calendar
-            [iconDisplay]="'input'"
-            [showIcon]="true"
-            [formControl]="selectedDates"
-            selectionMode="range"
-            inputId="icondisplay"
-            name="date"
-            appendTo="body"
-            placeholder="วันเริ่มต้น - วันสิ้นสุด"
-            (onSelect)="onSelect()"
-            [readonlyInput]="true"
-            dateFormat="d M yy"
+                  [iconDisplay]="'input'"
+                  [showIcon]="true"
+                  [formControl]="selectedDates"
+                  selectionMode="range"
+                  inputId="icondisplay"
+                  name="date"
+                  appendTo="body"
+                  placeholder="วันเริ่มต้น - วันสิ้นสุด"
+                  (onSelect)="onSelect()"
+                  [readonlyInput]="true"
+                  dateFormat="d M yy"
           ></p-calendar>
           <div
-            class="flex-grow-1 flex align-items-center justify-content-center"
+                  class="flex-grow-1 flex align-items-center justify-content-center"
           >
             <p-iconField iconPosition="right">
               <p-inputIcon
-                styleClass="pi pi-book cursor-pointer"
-                (click)="resetAll()"
+                      styleClass="pi pi-book cursor-pointer"
+                      (click)="resetAll()"
               />
               <input
-                type="text"
-                pInputText
-                name="detail"
-                [formControl]="searchDetail"
+                      type="text"
+                      pInputText
+                      name="detail"
+                      [formControl]="searchDetail"
               />
             </p-iconField>
           </div>
@@ -71,19 +71,19 @@ import { AccountsComponent } from './accounts.component';
     @if (account) {
       <div class="flex justify-content-around align-items-center mt-3">
         <p-table
-          [value]="account"
-          [scrollable]="true"
-          [rowHover]="true"
-          scrollHeight="400px"
-          [tableStyle]="{ 'min-width': '35vw' }"
-          styleClass="p-datatable-striped"
+                [value]="account"
+                [scrollable]="true"
+                [rowHover]="true"
+                scrollHeight="400px"
+                [tableStyle]="{ 'min-width': '35vw' }"
+                styleClass="p-datatable-striped"
         >
           <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
               <span class="text-orange-400 font-bold text-2xl tasadith">
                 รายการของ: <span class="text-green-400"> {{ title }}</span>
               </span>
-              <p-button icon="pi pi-refresh" />
+              <p-button icon="pi pi-refresh"/>
             </div>
           </ng-template>
           <ng-template pTemplate="header">
@@ -119,17 +119,17 @@ import { AccountsComponent } from './accounts.component';
               <td>
                 @if (admin) {
                   <i
-                    pTooltip="แก้ไข"
-                    (click)="showDialog(account)"
-                    tooltipPosition="bottom"
-                    class="pi pi-pen-to-square mx-2 text-orange-600"
+                          pTooltip="แก้ไข"
+                          (click)="showDialog(account)"
+                          tooltipPosition="bottom"
+                          class="pi pi-pen-to-square mx-2 text-orange-600"
                   ></i>
-                  <p-confirmPopup />
+                  <p-confirmPopup/>
                   <i
-                    pTooltip="ลบข้อมูล"
-                    (click)="conf_($event, account.id)"
-                    tooltipPosition="bottom"
-                    class="pi pi-trash text-red-500"
+                          pTooltip="ลบข้อมูล"
+                          (click)="conf_($event, account.id)"
+                          tooltipPosition="bottom"
+                          class="pi pi-trash text-red-500"
                   ></i>
                 }
               </td>
@@ -139,8 +139,8 @@ import { AccountsComponent } from './accounts.component';
           <ng-template pTemplate="emptymessage">
             <tr>
               <td
-                colspan="6"
-                class="text-center text-orange-400 text-xl font-bold sarabun"
+                      colspan="6"
+                      class="text-center text-orange-400 text-xl font-bold sarabun"
               >
                 ไม่พบข้อมูลรายจ่าย
               </td>
@@ -148,7 +148,7 @@ import { AccountsComponent } from './accounts.component';
           </ng-template>
           <ng-template pTemplate="summary">
             <div
-              class="flex align-items-center justify-content-around sarabun font-bold"
+                    class="flex align-items-center justify-content-around sarabun font-bold"
             >
               <span>
                 รวม:
@@ -169,7 +169,7 @@ import { AccountsComponent } from './accounts.component';
         </p-table>
       </div>
     }
-  `,
+	`,
   styles: ``,
 })
 export class AccountBetweenDetailComponent {

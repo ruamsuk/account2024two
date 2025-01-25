@@ -11,8 +11,8 @@ import { MonthSummary } from '../models/credit.model';
 import { MonthConversionService } from '../services/month-conversion.service';
 import { CreditComponent } from './credit.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { ThaiDatePipe } from '../pipe/thai-date.pipe';
 import { AuthService } from '../services/auth.service';
+import { ThaiDatePipe } from '../pipe/thai-date.pipe';
 
 @Component({
   selector: 'app-credit-between',
@@ -28,7 +28,7 @@ import { AuthService } from '../services/auth.service';
     <div class="flex justify-content-around align-items-center h-15rem">
       <p-card>
         <p
-          class="hidden flex justify-content-center text-gray-200 tasadith text-2xl -mt-4 "
+                class="hidden flex justify-content-center text-gray-200 tasadith text-2xl -mt-4 "
         >
           รายการบัตรเครดิตตามช่วงเวลา
         </p>
@@ -37,11 +37,11 @@ import { AuthService } from '../services/auth.service';
           <div class="flex align-items-center justify-content-center w-19rem">
             <p-floatLabel class="md:w-20rem w-full">
               <p-treeSelect
-                containerStyleClass="w-full"
-                [formControl]="selectMonth"
-                [options]="month"
-                (onNodeSelect)="searchM()"
-                placeholder="เลิอกเดือน"
+                      containerStyleClass="w-full"
+                      [formControl]="selectMonth"
+                      [options]="month"
+                      (onNodeSelect)="searchM()"
+                      placeholder="เลิอกเดือน"
               />
               <label for="treeSelect">เลือกเดือน</label>
             </p-floatLabel>
@@ -49,11 +49,11 @@ import { AuthService } from '../services/auth.service';
           <div class="flex align-items-center justify-content-center w-19rem">
             <p-floatLabel class="md:w-20rem w-full">
               <p-treeSelect
-                containerStyleClass="w-full"
-                [formControl]="selectYear"
-                [options]="year"
-                (onNodeSelect)="search()"
-                placeholder="เลิอกปี"
+                      containerStyleClass="w-full"
+                      [formControl]="selectYear"
+                      [options]="year"
+                      (onNodeSelect)="search()"
+                      placeholder="เลิอกปี"
               />
               <label for="treeSelect">เลือกปี</label>
             </p-floatLabel>
@@ -65,7 +65,7 @@ import { AuthService } from '../services/auth.service';
     @if (creditSummary$ | async; as creditSummary) {
       @if (creditSummary.transactions.length > 0) {
         <div
-          class="table-container align-items-center justify-content-center -mt-2"
+                class="table-container align-items-center justify-content-center -mt-2"
         >
           @if (loading) {
             <div class="loading-shade">
@@ -74,15 +74,15 @@ import { AuthService } from '../services/auth.service';
           }
           <div class="card">
             <p-table
-              #tb
-              [value]="creditSummary.transactions"
-              [columns]="cols"
-              [paginator]="true"
-              [rows]="8"
-              [rowHover]="true"
-              [style]="{ 'min-width': '40rem' }"
-              styleClass="p-datatable-striped"
-              responsiveLayout="scroll"
+                    #tb
+                    [value]="creditSummary.transactions"
+                    [columns]="cols"
+                    [paginator]="true"
+                    [rows]="8"
+                    [rowHover]="true"
+                    [style]="{ 'min-width': '40rem' }"
+                    styleClass="p-datatable-striped"
+                    responsiveLayout="scroll"
             >
               <ng-template pTemplate="caption">
                 <div class="flex justify-content-between">
@@ -115,7 +115,7 @@ import { AuthService } from '../services/auth.service';
               <ng-template pTemplate="body" let-credit let-i="rowIndex">
                 <tr [ngClass]="{ 'row-income': credit.isCashback }">
                   <td
-                    [ngClass]="{
+                          [ngClass]="{
                       isIncome: credit.isCashback,
                       'custom-padding': true,
                     }"
@@ -137,17 +137,17 @@ import { AuthService } from '../services/auth.service';
                   <td>
                     @if (admin) {
                       <i
-                        pTooltip="แก้ไข"
-                        (click)="showDialog(credit)"
-                        tooltipPosition="bottom"
-                        class="pi pi-pen-to-square mx-3 text-blue-400"
+                              pTooltip="แก้ไข"
+                              (click)="showDialog(credit)"
+                              tooltipPosition="bottom"
+                              class="pi pi-pen-to-square mx-3 text-blue-400"
                       ></i>
                       <p-confirmPopup/>
                       <i
-                        pTooltip="ลบข้อมูล"
-                        (click)="conf($event, credit.id)"
-                        tooltipPosition="bottom"
-                        class="pi pi-trash text-red-500"
+                              pTooltip="ลบข้อมูล"
+                              (click)="conf($event, credit.id)"
+                              tooltipPosition="bottom"
+                              class="pi pi-trash text-red-500"
                       ></i>
                     }
                   </td>
@@ -162,7 +162,7 @@ import { AuthService } from '../services/auth.service';
                     <div class="ml-3 text-red-300">
                       {{
                         isDataAvailable(creditSummary)
-                          | currency: '' : '' : '1.2-2'
+                                | currency: '' : '' : '1.2-2'
                       }}
                     </div>
                   </td>
@@ -183,7 +183,7 @@ import { AuthService } from '../services/auth.service';
         </div>
       }
     }
-  `,
+	`,
   styles: `
     .custom-padding {
       padding-left: 25px;

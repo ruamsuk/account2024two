@@ -16,16 +16,29 @@ import { ConfirmationService } from 'primeng/api';
     <hr class="h-px bg-gray-200 border-0" />
     <form [formGroup]="monthlyForm" (ngSubmit)="saveMonthly($event)">
       <input type="hidden" />
-      <div class="field">
-        <label for="treeSelect" class="ml-2">เดือน</label>
-        <p-treeSelect
-          class=""
-          containerStyleClass="w-full"
-          formControlName="month"
-          [options]="_month"
-          appendTo="body"
-          placeholder="เลิอกเดือน"
-        />
+      <div class="formgrid grid">
+        <div class="field col">
+          <label for="treeSelect" class="ml-2">เดือน</label>
+          <p-treeSelect
+            class=""
+            containerStyleClass="w-full"
+            formControlName="month"
+            [options]="_month"
+            appendTo="body"
+            placeholder="เลิอกเดือน"
+          />
+        </div>
+        <div class="field col">
+          <label for="treeSelect" class="ml-2">ปี</label>
+          <p-treeSelect
+            class=""
+            containerStyleClass="w-full"
+            formControlName="year"
+            [options]="year"
+            appendTo="body"
+            placeholder="เลิอกปี"
+          />
+        </div>
       </div>
       <div class="field">
         <label for="date">วันเริ่มต้น</label>
@@ -93,6 +106,10 @@ export class CrudMonthlyComponent implements OnInit, OnDestroy {
       label: 'มกราคม',
       parent: undefined,
     } as unknown as Monthly),
+    year: new FormControl({
+      label: new Date().getFullYear() + 543,
+      parent: undefined,
+    },  Validators.required),
     datestart: new FormControl('', Validators.required),
     dateend: new FormControl('', Validators.required),
   });
@@ -109,12 +126,16 @@ export class CrudMonthlyComponent implements OnInit, OnDestroy {
       this.monthlyForm.patchValue({
         id: this.monthlyData.data.id,
         month: this.monthlyData.data.month.label,
+        year: this.monthlyData.data.year.label,
         datestart: this.monthlyData.data.datestart.toDate(),
         dateend: this.monthlyData.data.dateend.toDate(),
       });
     }
     this.selectService.getMonth().then((month) => {
       this._month = month;
+    });
+    this.selectService.getYear().then((year) => {
+      this.year = year;
     });
   }
 
@@ -124,6 +145,11 @@ export class CrudMonthlyComponent implements OnInit, OnDestroy {
     if (this.monthlyForm.invalid) return;
 
     const monthly = this.monthlyForm.value;
+    const convertedYear = Number(monthly.year?.label) - 543;
+    const dataToSave = {
+      ...monthly,
+      year: convertedYear,
+    }
 
     if (monthly.id) {
       if (monthly.month == null) {
@@ -140,7 +166,7 @@ export class CrudMonthlyComponent implements OnInit, OnDestroy {
           },
         });
       } else {
-        this.monthlyService.updateMonthly(monthly).subscribe({
+        this.monthlyService.updateMonthly(dataToSave).subscribe({
           next: () =>
             this.message.addMessage(
               'success',
@@ -153,7 +179,7 @@ export class CrudMonthlyComponent implements OnInit, OnDestroy {
         });
       }
     } else {
-      this.monthlyService.addMonthly(monthly).subscribe({
+      this.monthlyService.addMonthly(dataToSave).subscribe({
         next: () =>
           this.message.addMessage('success', 'Successfully', 'Saved monthly.'),
         error: (err) => this.message.addMessage('error', 'Error', err.message),
@@ -169,4 +195,5 @@ export class CrudMonthlyComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.ref) this.ref.destroy();
   }
+
 }

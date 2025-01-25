@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { ThaiDatePipe } from '../pipe/thai-date.pipe';
 import { SharedModule } from '../shared/shared.module';
 import { Account } from '../models/account.model';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ThaiDatePipe } from '../pipe/thai-date.pipe';
 
 @Component({
   selector: 'app-account-detail',
@@ -50,7 +50,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
         <th>รับ/จ่าย:</th>
         <td>
           <span
-            class="{{ account.isInCome ? 'text-green-400' : 'text-red-400' }}"
+                  class="{{ account.isInCome ? 'text-green-400' : 'text-red-400' }}"
           >
             {{ account.isInCome ? 'รายรับ' : 'รายจ่าย' }}
           </span>
@@ -59,21 +59,20 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
     </table>
     <div class="flex justify-content-end">
       <p-button
-        label="Close"
-        severity="secondary"
-        size="small"
-        (onClick)="closeDialog()"
+              label="Close"
+              severity="secondary"
+              size="small"
+              (onClick)="closeDialog()"
       />
     </div>
-  `,
+	`,
   styles: `
     /** อันนี้ต้องคงไว้ */
     table {
       border-collapse: collapse;
       font-family: 'Sarabun', sans-serif;
-      font-size: 18px;
+      font-size: 1rem !important;
       margin-bottom: 1rem;
-      //color: #212529; /** ถ้ากำหนดสี มันจะไม่แสดงข้อมูลในตาราง **/
       width: 100%;
     }
 
@@ -83,6 +82,8 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
       vertical-align: top;
       border-top: 1px solid #c7cacb;
       overflow: hidden;
+      font-size: 1rem !important;
+      font-weight: 400 !important;
     }
 
     .table th,
@@ -90,11 +91,12 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
       border-bottom: 1px solid grey;
     }
 
-    table th {
+    .table th {
       text-align: right;
       padding-right: 5px;
       height: 2rem;
       width: 36%;
+      font-weight: 600 !important;
     }
   `,
 })

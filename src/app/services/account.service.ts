@@ -12,6 +12,8 @@ import {
   where,
 } from '@angular/fire/firestore';
 import { from, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root',
@@ -56,6 +58,7 @@ export class AccountService {
       const number = account.amount.replace(/[^0-9]/g, '');
       account.amount = parseFloat(number);
     }
+    console.log(JSON.stringify(account, null, 2));
     const ref = doc(this.firestore, 'accounts', `${account.id}`);
     return from(updateDoc(ref, { ...account, modify: new Date() }));
   }
@@ -73,7 +76,14 @@ export class AccountService {
       where('isInCome', '==', isIncome),
       orderBy('date', 'asc'),
     );
-    return collectionData(q, { idField: 'id' });
+    return collectionData(q, { idField: 'id' }).pipe(
+      map((data: any[]) =>
+        data.map((item) => ({
+          ...item,
+          amount: typeof item.amount === 'number' ? item.amount : parseFloat(item.amount || '0'), // ตรวจสอบและแปลง amount
+        })),
+      ),
+    );
   }
 
   /** search date between & detail not cash back */
@@ -87,6 +97,13 @@ export class AccountService {
       where('details', '<=', description + '\uf8ff'),
       orderBy('date', 'desc'),
     );
-    return collectionData(q, { idField: 'id' });
+    return collectionData(q, { idField: 'id' }).pipe(
+      map((data: any[]) =>
+        data.map((item) => ({
+          ...item,
+          amount: typeof item.amount === 'number' ? item.amount : parseFloat(item.amount || '0'), // ตรวจสอบและแปลง amount
+        })),
+      ),
+    );
   }
 }

@@ -16,8 +16,8 @@ import { AuthService } from '../services/auth.service';
 import { Table } from 'primeng/table';
 import { AccountsComponent } from './accounts.component';
 import { AccountDetailComponent } from './account-detail.component';
-import { ThaiDatePipe } from '../pipe/thai-date.pipe';
 import { FormControl } from '@angular/forms';
+import { ThaiDatePipe } from '../pipe/thai-date.pipe';
 
 @Component({
   selector: 'app-account-list',
@@ -27,33 +27,33 @@ import { FormControl } from '@angular/forms';
     <div class="table-container align-items-center justify-content-center mt-3">
       @if (loading) {
         <div class="loading-shade">
-          <p-progressSpinner strokeWidth="4" ariaLabel="loading" />
+          <p-progressSpinner strokeWidth="4" ariaLabel="loading"/>
         </div>
       }
 
       <div class="card">
         <p-table
-          #dt
-          [value]="accounts"
-          [rowHover]="true"
-          [rows]="10"
-          [loading]="loading"
-          [paginator]="true"
-          [globalFilterFields]="['details', 'remark']"
-          [tableStyle]="{ 'min-width': '40rem' }"
+                #dt
+                [value]="accounts"
+                [rowHover]="true"
+                [rows]="10"
+                [loading]="loading"
+                [paginator]="true"
+                [globalFilterFields]="['details', 'remark']"
+                [tableStyle]="{ 'min-width': '40rem' }"
         >
           <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
               <span>
                 <p-button
-                  (click)="showDialog('')"
-                  [disabled]="!admin"
-                  size="small"
-                  icon="pi pi-plus"
+                        (click)="showDialog('')"
+                        [disabled]="!admin"
+                        size="small"
+                        icon="pi pi-plus"
                 />
               </span>
               <span
-                class="hidden md:block tasadith text-green-400 text-3xl ml-auto"
+                      class="hidden md:block tasadith text-green-400 text-3xl ml-auto"
               >
                 รายการค่าใช้จ่าย
               </span>
@@ -62,14 +62,14 @@ import { FormControl } from '@angular/forms';
                   <i class="pi pi-search"></i>
                 </p-inputIcon>
                 <input
-                  class="sarabun"
-                  pInputText
-                  [formControl]="searchValue"
-                  pTooltip="หารายการ หรือหมายเหตุ"
-                  tooltipPosition="bottom"
-                  placeholder="ค้นหา .."
-                  type="text"
-                  (input)="dt.filterGlobal(getValue($event), 'contains')"
+                        class="sarabun"
+                        pInputText
+                        [formControl]="searchValue"
+                        pTooltip="หารายการ หรือหมายเหตุ"
+                        tooltipPosition="bottom"
+                        placeholder="ค้นหา .."
+                        type="text"
+                        (input)="dt.filterGlobal(getValue($event), 'contains')"
                 />
                 @if (searchValue.value) {
                   <span class="icons" (click)="clear(dt)">
@@ -110,7 +110,7 @@ import { FormControl } from '@angular/forms';
                 {{ account.details }}
               </td>
               <td
-                [ngClass]="{
+                      [ngClass]="{
                   isIncome: account.isInCome,
                   'hide-on-mobile': isMobile,
                 }"
@@ -118,7 +118,7 @@ import { FormControl } from '@angular/forms';
                 {{ account.amount | currency: '' : '' }}
               </td>
               <td
-                [ngClass]="{
+                      [ngClass]="{
                   isIncome: account.isInCome,
                   'hide-on-mobile': isMobile,
                 }"
@@ -127,31 +127,31 @@ import { FormControl } from '@angular/forms';
               </td>
               <td>
                 <i
-                  pTooltip="รายละเอียด"
-                  (click)="onDetail(account)"
-                  tooltipPosition="bottom"
-                  class="pi pi-list text-blue-600"
+                        pTooltip="รายละเอียด"
+                        (click)="onDetail(account)"
+                        tooltipPosition="bottom"
+                        class="pi pi-list text-blue-600"
                 ></i>
                 @if (admin) {
                   <i
-                    pTooltip="แก้ไข"
-                    (click)="showDialog(account)"
-                    tooltipPosition="bottom"
-                    class="pi pi-pen-to-square mx-3 text-orange-600"
+                          pTooltip="แก้ไข"
+                          (click)="showDialog(account)"
+                          tooltipPosition="bottom"
+                          class="pi pi-pen-to-square mx-3 text-orange-600"
                   ></i>
-                  <p-confirmPopup />
+                  <p-confirmPopup/>
                   <i
-                    pTooltip="ลบข้อมูล"
-                    (click)="conf($event, account.id)"
-                    tooltipPosition="bottom"
-                    class="pi pi-trash text-red-500"
+                          pTooltip="ลบข้อมูล"
+                          (click)="conf($event, account.id)"
+                          tooltipPosition="bottom"
+                          class="pi pi-trash text-red-500"
                   ></i>
                 }
               </td>
               <td>
                 @if (account.isInCome) {
                   <span class="flex justify-content-start ml-2 text-green-400"
-                    >รายรับ</span
+                  >รายรับ</span
                   >
                 }
               </td>
@@ -160,7 +160,7 @@ import { FormControl } from '@angular/forms';
         </p-table>
       </div>
     </div>
-  `,
+	`,
   styles: ``,
 })
 export class AccountListComponent implements OnInit {

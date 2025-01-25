@@ -21,7 +21,8 @@ export class IncomeExpenseService {
 
   getIncomeExpenseSummary(year: number) {
     // แปลงปี พ.ศ.เป็น ค.ศ.
-    year = Number(year) - 543;
+    const targetYear = Number(year) - 543;
+
     // ดึงข้อมูลรอบบัญชีจาก collection 'monthly'
     const monthlyQuery = query(collection(this.firestore, 'monthly'));
 
@@ -39,28 +40,27 @@ export class IncomeExpenseService {
       map(([monthlyData, accountsData]) => {
         const yearSummary: YearSummary = {};
 
-        // เรียงลำดับ monthlyData ตามเดือนและวันที่เริ่มต้น
-        monthlyData.sort((a, b) => {
+        // กรอง monthlyData ให้ตรงกับปีที่กำหนด
+        const filteredMonthlyData = monthlyData.filter((month) => month.year === targetYear);
+
+        // เรียงลำดับ monthlyData ตามเดือน
+        filteredMonthlyData.sort((a, b) => {
           const monthA = this.monthConversionService.thaiMonthToNumber(a.month);
           const monthB = this.monthConversionService.thaiMonthToNumber(b.month);
           if (monthA !== undefined && monthB !== undefined) {
             return (
-              monthA - monthB ||
-              a.datestart.toDate().getTime() - b.datestart.toDate().getTime()
+              monthA - monthB
             );
           }
           return 0;
         });
 
-        monthlyData.forEach((month) => {
+        // สร้าง ํYearSummary จากข้อมูลบัญชี
+        filteredMonthlyData.forEach((month) => {
           const startDate = month.datestart.toDate();
           const endDate = month.dateend.toDate();
+        //  console.log('Processing month: ', month.month, 'startDate: ', startDate, 'endDate: ', endDate);
 
-          if (
-            startDate.getFullYear() === year ||
-            endDate.getFullYear() === year ||
-            (startDate.getFullYear() < year && endDate.getFullYear() > year)
-          ) {
             const monthIncome = accountsData
               .filter(
                 (account) =>
@@ -68,7 +68,10 @@ export class IncomeExpenseService {
                   account.date.toDate() <= endDate &&
                   account.isInCome,
               )
-              .reduce((sum, account) => sum + account.amount, 0);
+              .reduce((sum, account) => {
+                const amount = typeof account.amount === 'string' ? parseFloat(account.amount) : account.amount;
+                return sum + amount;
+              }, 0);
 
             const monthExpense = accountsData
               .filter(
@@ -77,7 +80,10 @@ export class IncomeExpenseService {
                   account.date.toDate() <= endDate &&
                   !account.isInCome,
               )
-              .reduce((sum, account) => sum + account.amount, 0);
+              .reduce((sum, account) => {
+                const amount = typeof account.amount === 'string' ? parseFloat(account.amount) : account.amount;
+                return sum + amount;
+              }, 0);
 
             const monthBalance = monthIncome - monthExpense;
 
@@ -86,7 +92,6 @@ export class IncomeExpenseService {
               expense: monthExpense,
               balance: monthBalance,
             };
-          } // end if
         });
 
         return yearSummary;

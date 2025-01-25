@@ -39,6 +39,7 @@ export interface MonthlyData {
   month: string;
   datestart: admin.firestore.Timestamp;
   dateend: admin.firestore.Timestamp;
+  year: number;
 }
 
 export interface AccountData {

@@ -28,17 +28,17 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
         </div>
         <div class="flex-auto px-3">
           <p-calendar
-            [iconDisplay]="'input'"
-            [showIcon]="true"
-            [formControl]="selectedDates"
-            selectionMode="range"
-            inputId="icondisplay"
-            name="date"
-            appendTo="body"
-            placeholder="วันเริ่มต้น - วันสิ้นสุด"
-            (onSelect)="onSelect()"
-            [readonlyInput]="true"
-            dateFormat="d M yy"
+                  [iconDisplay]="'input'"
+                  [showIcon]="true"
+                  [formControl]="selectedDates"
+                  selectionMode="range"
+                  inputId="icondisplay"
+                  name="date"
+                  appendTo="body"
+                  placeholder="วันเริ่มต้น - วันสิ้นสุด"
+                  (onSelect)="onSelect()"
+                  [readonlyInput]="true"
+                  dateFormat="d M yy"
           ></p-calendar>
         </div>
       </p-card>
@@ -46,21 +46,22 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
     @if (accountExp) {
       <div class="flex justify-content-around align-items-center mt-3">
         <p-table
-          [value]="accountExp"
-          [rowHover]="true"
-          [tableStyle]="{ 'min-width': '50rem' }"
-          [scrollable]="true"
-          scrollHeight="300px"
-          styleClass="p-datatable-striped"
+                [value]="accountExp"
+                [rowHover]="true"
+                [tableStyle]="{ 'min-width': '50rem' }"
+                [scrollable]="true"
+                scrollHeight="300px"
+                styleClass="p-datatable-striped"
         >
           <ng-template pTemplate="caption">
-            <div class="flex justify-content-around tasadith md:text-xl">
+            <div class="flex justify-content-between tasadith md:text-xl">
               <span class="text-yellow-300">
-                รายจ่าย <span class="mx-3"> ยอดคงเหลือ: </span>
+                รายจ่าย
               </span>
-              <span class="text-red-300 text-xl">
-                {{ calculateBalance() | currency: '' : '' }} </span
-              ><span class="text-yellow-300">บาท</span>
+              <span [ngClass]="{'text-red-300': calculateBalance() < 0, 'text-green-300': calculateBalance() >= 0}" class="hidden md:block text-xl">
+               คงเหลือ: {{ calculateBalance() | currency: '' : '' }} บาท</span
+              >
+              <p-button icon="pi pi-refresh" (click)="resetForm()"/>
             </div>
           </ng-template>
           <ng-template pTemplate="header" let-columns>
@@ -83,17 +84,17 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
               <td>
                 @if (admin) {
                   <i
-                    pTooltip="แก้ไข"
-                    (click)="showDialog(account)"
-                    tooltipPosition="bottom"
-                    class="pi pi-pen-to-square mx-2 text-orange-600"
+                          pTooltip="แก้ไข"
+                          (click)="showDialog(account)"
+                          tooltipPosition="bottom"
+                          class="pi pi-pen-to-square mx-2 text-orange-600"
                   ></i>
                   <p-confirmPopup/>
                   <i
-                    pTooltip="ลบข้อมูล"
-                    (click)="conf_($event, account.id)"
-                    tooltipPosition="bottom"
-                    class="pi pi-trash text-red-500"
+                          pTooltip="ลบข้อมูล"
+                          (click)="conf_($event, account.id)"
+                          tooltipPosition="bottom"
+                          class="pi pi-trash text-red-500"
                   ></i>
                 }
               </td>
@@ -102,8 +103,8 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
           <ng-template pTemplate="emptymessage">
             <tr>
               <td
-                colspan="6"
-                class="text-center text-orange-400 text-xl sm:text-base font-bold sarabun"
+                      colspan="6"
+                      class="text-center text-orange-400 text-xl sm:text-base font-bold sarabun"
               >
                 ไม่พบข้อมูลรายจ่าย
               </td>
@@ -111,7 +112,7 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
           </ng-template>
           <ng-template pTemplate="summary">
             <div
-              class="flex align-items-center justify-content-around tasadith font-bold text-xl sm:text-base"
+                    class="flex align-items-center justify-content-around tasadith font-bold text-xl sm:text-base"
             >
               <span>
                 รวม:
@@ -135,16 +136,16 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
     @if (accountIncome) {
       <div class="flex justify-content-around align-items-center mt-3">
         <p-table
-          [value]="accountIncome"
-          [rowHover]="true"
-          [tableStyle]="{ 'min-width': '50rem' }"
-          [scrollable]="true"
-          scrollHeight="300px"
-          styleClass="p-datatable-striped"
+                [value]="accountIncome"
+                [rowHover]="true"
+                [tableStyle]="{ 'min-width': '50rem' }"
+                [scrollable]="true"
+                scrollHeight="300px"
+                styleClass="p-datatable-striped"
         >
           <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
-              <span class="text-orange-400 font-bold text-2xl tasadith sm:text-base"
+              <span class="text-green-400 font-bold tasadith md:text-xl"
               >รายรับ</span
               >
               <p-button icon="pi pi-refresh"/>
@@ -170,17 +171,17 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
               <td>
                 @if (admin) {
                   <i
-                    pTooltip="แก้ไข"
-                    (click)="showDialog(accountIn)"
-                    tooltipPosition="bottom"
-                    class="pi pi-pen-to-square mr-2 ml-2 text-orange-600"
+                          pTooltip="แก้ไข"
+                          (click)="showDialog(accountIn)"
+                          tooltipPosition="bottom"
+                          class="pi pi-pen-to-square mr-2 ml-2 text-orange-600"
                   ></i>
                   <p-confirmPopup/>
                   <i
-                    pTooltip="ลบข้อมูล"
-                    (click)="conf_($event, accountIn.id)"
-                    tooltipPosition="bottom"
-                    class="pi pi-trash text-red-500"
+                          pTooltip="ลบข้อมูล"
+                          (click)="conf_($event, accountIn.id)"
+                          tooltipPosition="bottom"
+                          class="pi pi-trash text-red-500"
                   ></i>
                 }
               </td>
@@ -189,8 +190,8 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
           <ng-template pTemplate="emptymessage">
             <tr>
               <td
-                colspan="6"
-                class="text-center text-orange-400 text-xl font-bold sarabun"
+                      colspan="6"
+                      class="text-center text-orange-400 text-xl font-bold sarabun"
               >
                 ไม่พบข้อมูลรายรับ
               </td>
@@ -198,7 +199,7 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
           </ng-template>
           <ng-template pTemplate="summary">
             <div
-              class="flex align-items-center justify-content-around tasadith font-bold text-xl"
+                    class="flex align-items-center justify-content-around tasadith font-bold text-xl"
             >
               <span>
                 รวม:
@@ -219,7 +220,7 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
         </p-table>
       </div>
     }
-  `,
+	`,
   styles: ``,
 })
 export class AccountBetweenComponent {
@@ -290,11 +291,11 @@ export class AccountBetweenComponent {
 
           /** Calculate total expenses and total income */
           this.totalExpenses = expenses.reduce(
-            (sum: any, expense: { amount: any }) => sum + expense.amount,
+            (sum: number, expense: { amount: number }) => sum + expense.amount,
             0,
           );
           this.totalIncome = incomes.reduce(
-            (sum: any, income: { amount: any }) => sum + income.amount,
+            (sum: number, income: { amount: number }) => sum + income.amount,
             0,
           );
         },
@@ -361,5 +362,13 @@ export class AccountBetweenComponent {
         this.onSelect();
       }
     });
+  }
+
+  resetForm() {
+    this.selectedDates.reset();
+    this.accountExp = [];
+    this.accountIncome = [];
+    this.totalIncome = 0;
+    this.totalExpenses = 0;
   }
 }

@@ -11,23 +11,23 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
     <div class="print-container">
       <table class="custom-table">
         <thead>
-          <tr>
-            <th rowspan="3" style="width: 15%">Date</th>
-          </tr>
-          <tr>
-            <th colspan="2" style="width: 20%" class="text-center">
-              Morning<br /><span class="text-gray-600">(Before medicine)</span>
-            </th>
-            <th colspan="2" style="width: 20%" class="text-center">
-              Evening<br /><span class="text-gray-600">(After medicine )</span>
-            </th>
-          </tr>
-          <tr>
-            <th style="width: 15%">BP1</th>
-            <th style="width: 15%">BP2</th>
-            <th style="width: 15%">BP1</th>
-            <th style="width: 15%">BP2</th>
-          </tr>
+        <tr>
+          <th rowspan="3" style="width: 15%">Date</th>
+        </tr>
+        <tr>
+          <th colspan="2" style="width: 20%" class="text-center">
+            Morning<br/><span class="text-gray-600">(Before medicine)</span>
+          </th>
+          <th colspan="2" style="width: 20%" class="text-center">
+            Evening<br/><span class="text-gray-600">(After medicine )</span>
+          </th>
+        </tr>
+        <tr>
+          <th style="width: 15%">BP1</th>
+          <th style="width: 15%">BP2</th>
+          <th style="width: 15%">BP1</th>
+          <th style="width: 15%">BP2</th>
+        </tr>
         </thead>
         <tbody>
           @for (blood of data.blood; track $index) {
@@ -44,13 +44,13 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
     </div>
     <div class="text-center mt5 noPrint">
       <p-button
-        label="Print"
-        severity="secondary"
-        size="small"
-        (onClick)="printPage()"
+              label="Print"
+              severity="secondary"
+              size="small"
+              (onClick)="printPage()"
       ></p-button>
     </div>
-  `,
+	`,
   styles: `
     .print-container {
       width: 21cm;

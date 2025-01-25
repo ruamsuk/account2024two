@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Credit } from '../models/credit.model';
-import { ThaiDatePipe } from '../pipe/thai-date.pipe';
 import { SharedModule } from '../shared/shared.module';
 import { CurrencyPipe } from '@angular/common';
+import { ThaiDatePipe } from '../pipe/thai-date.pipe';
 
 @Component({
   selector: 'app-credit-detail',
@@ -39,7 +39,7 @@ import { CurrencyPipe } from '@angular/common';
         <th>รับ/จ่าย:</th>
         <td>
           <span
-            class="{{ credit.isCashback ? 'text-green-400' : 'text-red-400' }}"
+                  class="{{ credit.isCashback ? 'text-green-400' : 'text-red-400' }}"
           >
             {{ credit.isCashback ? 'รายรับ' : 'รายจ่าย' }}
           </span>
@@ -48,13 +48,13 @@ import { CurrencyPipe } from '@angular/common';
     </table>
     <div class="flex justify-content-end mt-2">
       <p-button
-        label="Close"
-        severity="secondary"
-        size="small"
-        (onClick)="dialogClose()"
+              label="Close"
+              severity="secondary"
+              size="small"
+              (onClick)="dialogClose()"
       />
     </div>
-  `,
+	`,
   styles: `
     table {
       border-collapse: collapse;

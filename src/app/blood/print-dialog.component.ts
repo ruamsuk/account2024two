@@ -1,9 +1,9 @@
 import { Component, OnDestroy } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
-import { ThaiDatePipe } from '../pipe/thai-date.pipe';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { ThaiDatePipe } from '../pipe/thai-date.pipe';
 
 @Component({
   selector: 'app-print-dialog',
@@ -14,27 +14,27 @@ import jsPDF from 'jspdf';
       <div id="printContent">
         <table class="custom-table">
           <thead>
-            <tr>
-              <th rowspan="3" style="width: 15%">Date</th>
-            </tr>
-            <tr>
-              <th colspan="2" style="width: 20%" class="text-center">
-                Morning<br /><span class="text-gray-600"
-                  >(Before medicine)</span
-                >
-              </th>
-              <th colspan="2" style="width: 20%" class="text-center">
-                Evening<br /><span class="text-gray-600"
-                  >(After medicine )</span
-                >
-              </th>
-            </tr>
-            <tr>
-              <th style="width: 15%">BP1</th>
-              <th style="width: 15%">BP2</th>
-              <th style="width: 15%">BP1</th>
-              <th style="width: 15%">BP2</th>
-            </tr>
+          <tr>
+            <th rowspan="3" style="width: 15%">Date</th>
+          </tr>
+          <tr>
+            <th colspan="2" style="width: 20%" class="text-center">
+              Morning<br/><span class="text-gray-600"
+            >(Before medicine)</span
+            >
+            </th>
+            <th colspan="2" style="width: 20%" class="text-center">
+              Evening<br/><span class="text-gray-600"
+            >(After medicine )</span
+            >
+            </th>
+          </tr>
+          <tr>
+            <th style="width: 15%">BP1</th>
+            <th style="width: 15%">BP2</th>
+            <th style="width: 15%">BP1</th>
+            <th style="width: 15%">BP2</th>
+          </tr>
           </thead>
           <tbody>
             @for (blood of dataPrint.blood; track $index) {
@@ -52,22 +52,22 @@ import jsPDF from 'jspdf';
 
       <div class="text-center mt-5">
         <p-button
-          class="mr-2"
-          label="Convert2Pdf"
-          severity="secondary"
-          size="small"
-          (onClick)="generatePDF()"
+                class="mr-2"
+                label="Convert2Pdf"
+                severity="secondary"
+                size="small"
+                (onClick)="generatePDF()"
         ></p-button>
         <p-button
-          class="mr-2"
-          label="Cancel"
-          severity="secondary"
-          size="small"
-          (onClick)="ref.close()"
+                class="mr-2"
+                label="Cancel"
+                severity="secondary"
+                size="small"
+                (onClick)="ref.close()"
         ></p-button>
       </div>
     }
-  `,
+	`,
   styles: `
     #printContent {
       padding: 5px;

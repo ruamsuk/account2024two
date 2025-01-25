@@ -4,7 +4,6 @@ import { MessagesService } from '../services/messages.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Credit } from '../models/credit.model';
 import { SharedModule } from '../shared/shared.module';
-import { ThaiDatePipe } from '../pipe/thai-date.pipe';
 import { ConfirmationService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CreditComponent } from './credit.component';
@@ -12,6 +11,7 @@ import { Table } from 'primeng/table';
 import { CreditDetailComponent } from './credit-detail.component';
 import { AuthService } from '../services/auth.service';
 import { FormControl } from '@angular/forms';
+import { ThaiDatePipe } from '../pipe/thai-date.pipe';
 
 @Component({
   selector: 'app-credit-list',
@@ -26,27 +26,27 @@ import { FormControl } from '@angular/forms';
       }
       <div class="card">
         <p-table
-          #tb
-          [value]="credits"
-          [rowHover]="true"
-          [rows]="10"
-          [loading]="loading"
-          [paginator]="true"
-          [globalFilterFields]="['details', 'remark']"
-          [tableStyle]="{ 'min-width': '30rem' }"
+                #tb
+                [value]="credits"
+                [rowHover]="true"
+                [rows]="10"
+                [loading]="loading"
+                [paginator]="true"
+                [globalFilterFields]="['details', 'remark']"
+                [tableStyle]="{ 'min-width': '30rem' }"
         >
           <ng-template pTemplate="caption">
             <div class="flex align-items-center justify-content-between">
               <span>
                 <p-button
-                  (click)="showDialog('')"
-                  [disabled]="!admin"
-                  size="small"
-                  icon="pi pi-plus"
+                        (click)="showDialog('')"
+                        [disabled]="!admin"
+                        size="small"
+                        icon="pi pi-plus"
                 />
               </span>
               <span
-                class="hidden md:block tasadith text-green-400 text-3xl ml-auto"
+                      class="hidden md:block tasadith text-green-400 text-3xl ml-auto"
               >
                 รายการบัตรเครดิต
               </span>
@@ -55,14 +55,14 @@ import { FormControl } from '@angular/forms';
                   <i class="pi pi-search"></i>
                 </p-inputIcon>
                 <input
-                  class="sarabun"
-                  pInputText
-                  [formControl]="searchValue"
-                  pTooltip="หารายการ หรือหมายเหตุ"
-                  tooltipPosition="bottom"
-                  placeholder="ค้นหา .."
-                  type="text"
-                  (input)="tb.filterGlobal(getValue($event), 'contains')"
+                        class="sarabun"
+                        pInputText
+                        [formControl]="searchValue"
+                        pTooltip="หารายการ หรือหมายเหตุ"
+                        tooltipPosition="bottom"
+                        placeholder="ค้นหา .."
+                        type="text"
+                        (input)="tb.filterGlobal(getValue($event), 'contains')"
                 />
                 @if (searchValue.value) {
                   <span class="icons" (click)="clear(tb)">
@@ -105,7 +105,7 @@ import { FormControl } from '@angular/forms';
                 {{ credit.details }}
               </td>
               <td
-                [ngClass]="{
+                      [ngClass]="{
                   isIncome: credit.isCashback,
                   'hide-on-mobile': isMobile,
                 }"
@@ -113,7 +113,7 @@ import { FormControl } from '@angular/forms';
                 {{ credit.amount | currency: '' : '' }}
               </td>
               <td
-                [ngClass]="{
+                      [ngClass]="{
                   isIncome: credit.isCashback,
                   'hide-on-mobile': isMobile,
                 }"
@@ -122,24 +122,24 @@ import { FormControl } from '@angular/forms';
               </td>
               <td>
                 <i
-                  pTooltip="รายละเอียด"
-                  (click)="onDetail(credit)"
-                  tooltipPosition="bottom"
-                  class="pi pi-list text-blue-600"
+                        pTooltip="รายละเอียด"
+                        (click)="onDetail(credit)"
+                        tooltipPosition="bottom"
+                        class="pi pi-list text-blue-600"
                 ></i>
                 @if (admin) {
                   <i
-                    pTooltip="แก้ไข"
-                    (click)="showDialog(credit)"
-                    tooltipPosition="bottom"
-                    class="pi pi-pen-to-square text-orange-600 mx-3"
+                          pTooltip="แก้ไข"
+                          (click)="showDialog(credit)"
+                          tooltipPosition="bottom"
+                          class="pi pi-pen-to-square text-orange-600 mx-3"
                   ></i>
                   <p-confirmPopup/>
                   <i
-                    pTooltip="ลบข้อมูล"
-                    (click)="conf($event, credit.id)"
-                    tooltipPosition="bottom"
-                    class="pi pi-trash text-red-500"
+                          pTooltip="ลบข้อมูล"
+                          (click)="conf($event, credit.id)"
+                          tooltipPosition="bottom"
+                          class="pi pi-trash text-red-500"
                   ></i>
                 }
               </td>
@@ -147,8 +147,8 @@ import { FormControl } from '@angular/forms';
                 @if (credit.isCashback) {
                   <div class="block text-left text-green-400">รายรับ</div>
                   <span
-                    style="text-align: left; display: block;"
-                    class="text-green-400"
+                          style="text-align: left; display: block;"
+                          class="text-green-400"
                   >
                   </span>
                 }
@@ -158,8 +158,8 @@ import { FormControl } from '@angular/forms';
           <ng-template pTemplate="emptymessage">
             <tr>
               <td
-                colspan="6"
-                class="text-center text-orange-400 text-2xl font-bold anuphon"
+                      colspan="6"
+                      class="text-center text-orange-400 text-2xl font-bold anuphon"
               >
                 ไม่พบข้อมูล
               </td>
@@ -169,7 +169,7 @@ import { FormControl } from '@angular/forms';
       </div>
       <!--/ card -->
     </div>
-  `,
+	`,
   styles: ``,
   providers: [ConfirmationService],
 })

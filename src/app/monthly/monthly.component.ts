@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, OnDestroy } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { MonthlyService } from '../services/monthly.service';
 import { MessagesService } from '../services/messages.service';
@@ -12,16 +12,17 @@ import { CrudMonthlyComponent } from './crud-monthly/crud-monthly.component';
 import { ConfirmationService } from 'primeng/api';
 import { Monthly } from '../models/monthly.model';
 import { AuthService } from '../services/auth.service';
+import { ChristianToThaiYearPipe } from '../pipe/christian-to-thai-year.pipe';
 
 @Component({
   selector: 'app-monthly',
   standalone: true,
-  imports: [SharedModule, ThaiDatePipe],
+  imports: [SharedModule, ThaiDatePipe, ChristianToThaiYearPipe],
   template: `
     <div class="card">
       @if (loading) {
         <div class="loading-shade">
-          <p-progressSpinner strokeWidth="4" ariaLabel="loading" />
+          <p-progressSpinner strokeWidth="4" ariaLabel="loading"/>
         </div>
       }
       <div class="flex justify-content-center align-items-center">
@@ -81,8 +82,17 @@ import { AuthService } from '../services/auth.service';
             </ng-template>
             <ng-template pTemplate="header">
               <tr>
-                <th>
-                  <div class="flex align-items-center sm:ml-0">เดือน</div>
+                <th pSortableColumn="month">
+                  <div class="flex align-items-center sm:ml-0">
+                    เดือน
+                    <p-sortIcon field="เดือน"/>
+                  </div>
+                </th>
+                <th pSortableColumn="year">
+                  <div class="flex align-items-center sm:ml-0">
+                    ปี
+                    <p-sortIcon field="ปี"/>
+                  </div>
                 </th>
                 <th>
                   <div class="flex align-items-center">วันเริ่มต้น</div>
@@ -99,6 +109,7 @@ import { AuthService } from '../services/auth.service';
             <ng-template pTemplate="body" let-month>
               <tr>
                 <td>{{ month.month }}</td>
+                <td>{{ month.year | christianToThaiYear }}</td>
                 <td>{{ month.datestart | thaiDate }}</td>
                 <td>{{ month.dateend | thaiDate }}</td>
                 <td>
@@ -109,7 +120,7 @@ import { AuthService } from '../services/auth.service';
                       tooltipPosition="bottom"
                       class="pi pi-pen-to-square mr-2 ml-2 text-orange-600"
                     ></i>
-                    <p-confirmPopup />
+                    <p-confirmPopup/>
                     <i
                       pTooltip="ลบข้อมูล"
                       (click)="conf($event, month.id)"
@@ -167,7 +178,7 @@ import { AuthService } from '../services/auth.service';
     }
   `,
 })
-export class MonthlyComponent {
+export class MonthlyComponent implements OnDestroy {
   searchValue: string = '';
   year: any[] = [];
   loading: boolean = false;
@@ -195,15 +206,16 @@ export class MonthlyComponent {
   getMonthly() {
     this.loading = true;
     this.monthlyService
-      .loadMonthly()
+      .getSortedMonthlyData()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         catchError((err: any) => {
           this.messageService.addMessage('error', 'Error', err.message);
+          console.error(err);
           return of([]);
         }),
       )
-      .subscribe((result) => {
+      .subscribe((result: any[]) => {
         this.loading = false;
         this.monthly = result;
       });
@@ -270,5 +282,9 @@ export class MonthlyComponent {
         );
       },
     });
+  }
+
+  ngOnDestroy() {
+    if (this.ref) this.ref.destroy();
   }
 }
