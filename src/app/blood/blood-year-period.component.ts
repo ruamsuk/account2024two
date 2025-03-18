@@ -1,16 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BloodPressure } from '../models/blood-pressure.model';
-import { BloodService } from '../services/blood.service';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from '../shared/shared.module';
-import { Observable } from 'rxjs';
-import { PrintDialogComponent } from './print-dialog.component';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { BloodAddEditComponent } from './blood-add-edit.component';
 import { ConfirmationService } from 'primeng/api';
-import { MessagesService } from '../services/messages.service';
-import { AuthService } from '../services/auth.service';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Observable } from 'rxjs';
+import { BloodPressure } from '../models/blood-pressure.model';
 import { ThaiDatePipe } from '../pipe/thai-date.pipe';
+import { AuthService } from '../services/auth.service';
+import { BloodService } from '../services/blood.service';
+import { MessagesService } from '../services/messages.service';
+import { SharedModule } from '../shared/shared.module';
+import { BloodAddEditComponent } from './blood-add-edit.component';
+import { PrintDialogComponent } from './print-dialog.component';
 
 @Component({
   selector: 'app-blood-year-period',
@@ -25,7 +25,7 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
       }
       <p-card [style]="{ 'min-width': '30vw' }">
         <p
-                class="hidden flex justify-content-center text-gray-200 tasadith text-2xl -mt-4 xs:text-sm"
+          class="hidden flex justify-content-center text-gray-200 tasadith text-2xl -mt-4 xs:text-sm"
         >
           Blood Pressure Year Period
         </p>
@@ -34,22 +34,22 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
             <div class="flex align-items-center justify-content-center w-full">
               <p-floatLabel class="md:w-20rem w-full">
                 <p-treeSelect
-                        containerStyleClass="w-full"
-                        [formControl]="startYear"
-                        [options]="years"
-                        (onNodeSelect)="onStartYearSelect($event)"
-                        placeholder="เลือกปีเริ่มต้น"
+                  containerStyleClass="w-full"
+                  [formControl]="startYear"
+                  [options]="years"
+                  (onNodeSelect)="onStartYearSelect($event)"
+                  placeholder="เลือกปีเริ่มต้น"
                 />
                 <label for="treeSelect">เลือกปีเริ่มต้น</label>
               </p-floatLabel>
 
               <p-floatLabel class="md:w-20rem w-full">
                 <p-treeSelect
-                        containerStyleClass="w-full"
-                        [formControl]="endYear"
-                        [options]="years"
-                        (onNodeSelect)="onEndYearSelect($event)"
-                        placeholder="เลือกปีสิ้นสุด"
+                  containerStyleClass="w-full"
+                  [formControl]="endYear"
+                  [options]="years"
+                  (onNodeSelect)="onEndYearSelect($event)"
+                  placeholder="เลือกปีสิ้นสุด"
                 />
                 <label for="treeSelect">เลือกปีสิ้นสุด</label>
               </p-floatLabel>
@@ -62,15 +62,15 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
       <div class="card">
         @if (bloodPressureRecords$ | async; as bloods) {
           <p-table
-                  #bp
-                  [value]="bloods"
-                  [paginator]="true"
-                  [rows]="5"
-                  [rowHover]="true"
-                  [breakpoint]="'960px'"
-                  [tableStyle]="{ 'min-width': '50rem' }"
-                  responsiveLayout="stack"
-                  styleClass="p-datatable-gridlines"
+            #bp
+            [value]="bloods"
+            [paginator]="true"
+            [rows]="5"
+            [rowHover]="true"
+            [breakpoint]="'960px'"
+            [tableStyle]="{ 'min-width': '50rem' }"
+            responsiveLayout="stack"
+            styleClass="p-datatable-gridlines"
           >
             <ng-template pTemplate="caption">
               <div class="flex justify-content-between align-items-center">
@@ -88,18 +88,18 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
               </tr>
               <tr>
                 <th
-                        colspan="2"
-                        style="width: 20%"
-                        class="text-center text-green-400"
+                  colspan="2"
+                  style="width: 20%"
+                  class="text-center text-green-400"
                 >
                   Morning<br/><span class="text-gray-600"
                 >(Before medicine)</span
                 >
                 </th>
                 <th
-                        colspan="2"
-                        style="width: 20%"
-                        class="text-center text-yellow-400"
+                  colspan="2"
+                  style="width: 20%"
+                  class="text-center text-yellow-400"
                 >
                   Evening<br/><span class="text-gray-600"
                 >(After medicine )</span
@@ -126,7 +126,7 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
                 </td>
                 <td>
                   <div
-                          [ngClass]="{
+                    [ngClass]="{
                       'high-bp': isBloodPressureHigh(blood.morning.bp1),
                       'normal-bp': !isBloodPressureHigh(blood.morning.bp1),
                     }"
@@ -136,7 +136,7 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
                 </td>
                 <td>
                   <div
-                          [ngClass]="{
+                    [ngClass]="{
                       'high-bp': isBloodPressureHigh(blood.morning.bp2),
                       'normal-bp': !isBloodPressureHigh(blood.morning.bp1),
                     }"
@@ -146,7 +146,7 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
                 </td>
                 <td>
                   <div
-                          [ngClass]="{
+                    [ngClass]="{
                       'high-bp': isBloodPressureHigh(blood.evening.bp1),
                       'normal-bp': !isBloodPressureHigh(blood.morning.bp1),
                     }"
@@ -156,7 +156,7 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
                 </td>
                 <td>
                   <div
-                          [ngClass]="{
+                    [ngClass]="{
                       'high-bp': isBloodPressureHigh(blood.evening.bp2),
                       'normal-bp': !isBloodPressureHigh(blood.morning.bp1),
                     }"
@@ -167,13 +167,13 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
                 <td class="no-print">
                   @if (admin) {
                     <i
-                            class="pi pi-pen-to-square mr-2 ml-2 text-blue-400"
-                            (click)="showDialog(blood)"
+                      class="pi pi-pen-to-square mr-2 ml-2 text-blue-400"
+                      (click)="showDialog(blood)"
                     ></i>
                     <p-confirmPopup/>
                     <i
-                            class="pi pi-trash mr-2 ml-2 text-orange-600"
-                            (click)="confine($event, blood.id)"
+                      class="pi pi-trash mr-2 ml-2 text-orange-600"
+                      (click)="confine($event, blood.id)"
                     ></i>
                   } @else {
                     <i class="pi pi-lock text-100"></i>
@@ -185,7 +185,7 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
         }
       </div>
     </div>
-	`,
+  `,
   styles: `
     td {
       font-family: 'Sarabun', sans-serif !important;
@@ -219,12 +219,13 @@ export class BloodYearPeriodComponent implements OnInit, OnDestroy {
     private confirmService: ConfirmationService,
     private dialogService: DialogService,
     private messageService: MessagesService,
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     const currentYear = new Date().getFullYear() + 543; // แปลงเป็นพุทธศักราช
     for (let i = 0; i < 5; i++) {
-      this.years.push({ label: `${currentYear - i}`, value: currentYear - i });
+      this.years.push({label: `${currentYear - i}`, value: currentYear - i});
     }
     this.authService.isAdmin().then((isAdmin) => {
       this.admin = isAdmin;
@@ -258,7 +259,7 @@ export class BloodYearPeriodComponent implements OnInit, OnDestroy {
 
   showPrint(blood: any) {
     this.ref = this.dialogService.open(PrintDialogComponent, {
-      data: { blood },
+      data: blood,
       header: 'Blood Pressure Print',
       width: '700px',
       breakpoints: {
@@ -307,7 +308,8 @@ export class BloodYearPeriodComponent implements OnInit, OnDestroy {
           error: (error: any) => {
             this.messageService.addMessage('error', 'Error', error.message);
           },
-          complete: () => {},
+          complete: () => {
+          },
         });
       },
       reject: () => {

@@ -1,73 +1,38 @@
 import { Component, OnDestroy } from '@angular/core';
-import { SharedModule } from '../shared/shared.module';
+import dayjs from 'dayjs';
+import Docxtemplater from 'docxtemplater';
+import { saveAs } from 'file-saver';
+import PizZip from 'pizzip';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
-import { ThaiDatePipe } from '../pipe/thai-date.pipe';
+import { MessagesService } from '../services/messages.service';
+import { SharedModule } from '../shared/shared.module';
+
+interface Record {
+  date: { toDate: () => Date };
+  morning?: { bp1?: string; bp2?: string };
+  evening?: { bp1?: string; bp2?: string };
+}
 
 @Component({
   selector: 'app-print-dialog',
   standalone: true,
-  imports: [SharedModule, ThaiDatePipe],
+  imports: [SharedModule],
   template: `
-    @if (dataPrint) {
-      <div id="printContent">
-        <table class="custom-table">
-          <thead>
-          <tr>
-            <th rowspan="3" style="width: 15%">Date</th>
-          </tr>
-          <tr>
-            <th colspan="2" style="width: 20%" class="text-center">
-              Morning<br/><span class="text-gray-600"
-            >(Before medicine)</span
-            >
-            </th>
-            <th colspan="2" style="width: 20%" class="text-center">
-              Evening<br/><span class="text-gray-600"
-            >(After medicine )</span
-            >
-            </th>
-          </tr>
-          <tr>
-            <th style="width: 15%">BP1</th>
-            <th style="width: 15%">BP2</th>
-            <th style="width: 15%">BP1</th>
-            <th style="width: 15%">BP2</th>
-          </tr>
-          </thead>
-          <tbody>
-            @for (blood of dataPrint.blood; track $index) {
-              <tr>
-                <td>{{ blood.date | thaiDate }}</td>
-                <td>{{ blood.morning.bp1 }}</td>
-                <td>{{ blood.morning.bp2 }}</td>
-                <td>{{ blood.evening.bp1 }}</td>
-                <td>{{ blood.evening.bp2 }}</td>
-              </tr>
-            }
-          </tbody>
-        </table>
-      </div>
-
-      <div class="text-center mt-5">
-        <p-button
-                class="mr-2"
-                label="Convert2Pdf"
-                severity="secondary"
-                size="small"
-                (onClick)="generatePDF()"
-        ></p-button>
-        <p-button
-                class="mr-2"
-                label="Cancel"
-                severity="secondary"
-                size="small"
-                (onClick)="ref.close()"
-        ></p-button>
-      </div>
-    }
-	`,
+    <div class="flex justify-content-center">
+      <h1 class="text-xl text-orange-400 tasadith">
+        สร้างเอกสาร Word documents แล้ว โปรดบันทึกไฟล์
+      </h1>
+    </div>
+    <div class="text-center mt-5">
+      <p-button
+        class="mr-2"
+        label="Close"
+        severity="secondary"
+        size="small"
+        (onClick)="ref.close()"
+      ></p-button>
+    </div>
+  `,
   styles: `
     #printContent {
       padding: 5px;
@@ -138,41 +103,66 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
   `,
 })
 export class PrintDialogComponent implements OnDestroy {
-  dataPrint: any;
+  dataPrints: any;
+  mappedRecords: {
+    no: number;
+    date: string;
+    morning_bp1: string;
+    morning_bp2: string;
+    evening_bp1: string;
+    evening_bp2: string;
+  }[] = [];
+
 
   constructor(
     public ref: DynamicDialogRef,
     private config: DynamicDialogConfig,
+    private messageService: MessagesService,
   ) {
-    if (this.config.data) {
-      this.dataPrint = config.data;
-    }
-  }
+    if (this.config.data && Array.isArray(this.config.data)) {
+      const records: Record[] = this.config.data;
+      this.mappedRecords = records.map((record, index) => ({
+        no: index + 1,
+        date: dayjs(record.date.toDate()).format('DD/MM/YYYY'),
+        morning_bp1: record.morning?.bp1 || '',
+        morning_bp2: record.morning?.bp2 || '',
+        evening_bp1: record.evening?.bp1 || '',
+        evening_bp2: record.evening?.bp2 || '',
+      }));
 
-  generatePDF(): void {
-    const data = document.getElementById('printContent');
-    if (data) {
-      html2canvas(data).then((canvas) => {
-        const imgWidth = 208;
-        const pageHeight = 295;
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-        let heightLeft = imgHeight;
-        const contentDataURL = canvas.toDataURL('image/png');
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        let position = 0;
-        pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
-        while (heightLeft >= 0) {
-          position = heightLeft - imgHeight;
-          pdf.addPage();
-          pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight);
-          heightLeft -= pageHeight;
-        }
-        pdf.save('blood-pressure.pdf');
-      });
-      setTimeout(() => {
-        this.ref.close();
-      }, 1000);
+      console.log(JSON.stringify(this.mappedRecords, null, 2));
+
+      fetch('assets/template.docx')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`Template file not found ([${response.status}] ${response.statusText}) `);
+          }
+          return response.arrayBuffer();
+        })
+        .then(content => {
+          const zip = new PizZip(content);
+          const doc = new Docxtemplater(zip, {
+            paragraphLoop: true,
+            linebreaks: true
+          });
+
+          doc.renderAsync({records: this.mappedRecords})
+            .then(() => {
+              const generateBlob = doc.getZip().generate({
+                type: 'blob',
+                mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+              });
+              saveAs(generateBlob, 'BloodPressureReport.docx');
+            })
+            .catch(renderError => {
+              console.error('⚠️ Error rendering document:', renderError);
+              this.messageService.addMessage('error', 'Error', 'พบปัญหาในการสร้างเอกสาร กรุณาตรวจสอบ console');
+            });
+        })
+        .catch(fetchError => {
+          console.error('⚠️ Error:', fetchError);
+          this.messageService.addMessage('error', 'Error', `หาไฟล์ Word template ไม่พบ หรือมีปัญหา: ${fetchError.message}`);
+        });
     }
   }
 

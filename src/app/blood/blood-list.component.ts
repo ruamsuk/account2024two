@@ -1,17 +1,17 @@
 import { Component, DestroyRef, OnDestroy, OnInit } from '@angular/core';
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { MessagesService } from '../services/messages.service';
-import { BloodService } from '../services/blood.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { SharedModule } from '../shared/shared.module';
-import { BloodPressure } from '../models/blood-pressure.model';
-import { BloodAddEditComponent } from './blood-add-edit.component';
+import { FormControl } from '@angular/forms';
+import { ConfirmationService } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
 import { catchError, Observable, of } from 'rxjs';
-import { ConfirmationService } from 'primeng/api';
-import { FormControl } from '@angular/forms';
-import { AuthService } from '../services/auth.service';
+import { BloodPressure } from '../models/blood-pressure.model';
 import { ThaiDatePipe } from '../pipe/thai-date.pipe';
+import { AuthService } from '../services/auth.service';
+import { BloodService } from '../services/blood.service';
+import { MessagesService } from '../services/messages.service';
+import { SharedModule } from '../shared/shared.module';
+import { BloodAddEditComponent } from './blood-add-edit.component';
 
 @Component({
   selector: 'app-blood-list',
@@ -27,29 +27,29 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
       <div class="card">
         @if (bloods$ | async; as bloods) {
           <p-table
-                  #bp
-                  [value]="bloods"
-                  [paginator]="true"
-                  [globalFilterFields]="['date']"
-                  [rows]="8"
-                  [rowHover]="true"
-                  [breakpoint]="'960px'"
-                  [tableStyle]="{ 'min-width': '50rem' }"
-                  responsiveLayout="stack"
-                  styleClass="p-datatable-gridlines"
+            #bp
+            [value]="bloods"
+            [paginator]="true"
+            [globalFilterFields]="['date']"
+            [rows]="8"
+            [rowHover]="true"
+            [breakpoint]="'960px'"
+            [tableStyle]="{ 'min-width': '50rem' }"
+            responsiveLayout="stack"
+            styleClass="p-datatable-gridlines"
           >
             <ng-template pTemplate="caption">
               <div class="flex align-items-center justify-content-between">
                 <span>
                   <p-button
-                          (click)="showDialog('')"
-                          [disabled]="!admin"
-                          size="small"
-                          icon="pi pi-plus"
+                    (click)="showDialog('')"
+                    [disabled]="!admin"
+                    size="small"
+                    icon="pi pi-plus"
                   />
                 </span>
                 <span
-                        class="hidden md:block tasadith text-green-400 text-3xl ml-auto"
+                  class="hidden md:block tasadith text-green-400 text-3xl ml-auto"
                 >
                   Bloods Pressure List
                 </span>
@@ -58,14 +58,14 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
                     <i class="pi pi-search"></i>
                   </p-inputIcon>
                   <input
-                          class="sarabun"
-                          pInputText
-                          [formControl]="searchControl"
-                          pTooltip="Search Date."
-                          tooltipPosition="bottom"
-                          placeholder="Search Date .."
-                          type="text"
-                          (input)="bp.filterGlobal(getValue($event), 'contains')"
+                    class="sarabun"
+                    pInputText
+                    [formControl]="searchControl"
+                    pTooltip="Search Date."
+                    tooltipPosition="bottom"
+                    placeholder="Search Date .."
+                    type="text"
+                    (input)="bp.filterGlobal(getValue($event), 'contains')"
                   />
                   @if (searchControl.value) {
                     <span class="icons cursor-pointer" (click)="clear(bp)">
@@ -81,18 +81,18 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
               </tr>
               <tr>
                 <th
-                        colspan="2"
-                        style="width: 20%"
-                        class="text-center text-green-400"
+                  colspan="2"
+                  style="width: 20%"
+                  class="text-center text-green-400"
                 >
                   Morning<br/><span class="text-gray-600"
                 >(Before medicine)</span
                 >
                 </th>
                 <th
-                        colspan="2"
-                        style="width: 20%"
-                        class="text-center text-yellow-400"
+                  colspan="2"
+                  style="width: 20%"
+                  class="text-center text-yellow-400"
                 >
                   Evening<br/><span class="text-gray-600"
                 >(After medicine )</span
@@ -119,7 +119,7 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
                 </td>
                 <td>
                   <div
-                          [ngClass]="{
+                    [ngClass]="{
                       'high-bp': isBloodPressureHigh(blood.morning.bp1),
                       'normal-bp': !isBloodPressureHigh(blood.morning.bp1),
                     }"
@@ -129,7 +129,7 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
                 </td>
                 <td>
                   <div
-                          [ngClass]="{
+                    [ngClass]="{
                       'high-bp': isBloodPressureHigh(blood.morning.bp2),
                       'normal-bp': !isBloodPressureHigh(blood.morning.bp1),
                     }"
@@ -139,9 +139,9 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
                 </td>
                 <td>
                   <div
-                          [ngClass]="{
+                    [ngClass]="{
                       'high-bp': isBloodPressureHigh(blood.evening.bp1),
-                      'normal-bp': !isBloodPressureHigh(blood.morning.bp1),
+                      'normal-bp': !isBloodPressureHigh(blood.evening.bp1),
                     }"
                   >
                     {{ blood.evening.bp1 }}
@@ -149,9 +149,9 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
                 </td>
                 <td>
                   <div
-                          [ngClass]="{
+                    [ngClass]="{
                       'high-bp': isBloodPressureHigh(blood.evening.bp2),
-                      'normal-bp': !isBloodPressureHigh(blood.morning.bp1),
+                      'normal-bp': !isBloodPressureHigh(blood.evening.bp1),
                     }"
                   >
                     {{ blood.evening.bp2 }}
@@ -160,13 +160,13 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
                 <td>
                   @if (admin) {
                     <i
-                            class="pi pi-pen-to-square mr-2 ml-2 text-blue-400"
-                            (click)="showDialog(blood)"
+                      class="pi pi-pen-to-square mr-2 ml-2 text-blue-400"
+                      (click)="showDialog(blood)"
                     ></i>
                     <p-confirmPopup/>
                     <i
-                            class="pi pi-trash mr-2 ml-2 text-orange-600"
-                            (click)="confirm($event, blood.id)"
+                      class="pi pi-trash mr-2 ml-2 text-orange-600"
+                      (click)="confirm($event, blood.id)"
                     ></i>
                   } @else {
                     <i class="pi pi-lock text-100"></i>
@@ -178,7 +178,7 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
         }
       </div>
     </div>
-	`,
+  `,
   styles: `
     .high-bp {
       color: red;
@@ -289,7 +289,8 @@ export class BloodListComponent implements OnInit, OnDestroy {
           error: (error: any) => {
             this.messageService.addMessage('error', 'Error', error.message);
           },
-          complete: () => {},
+          complete: () => {
+          },
         });
       },
       reject: () => {

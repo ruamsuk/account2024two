@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { SharedModule } from '../shared/shared.module';
+import { FormControl } from '@angular/forms';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
-import { BloodService } from '../services/blood.service';
 import { BloodPressure } from '../models/blood-pressure.model';
-import { PrintDialogComponent } from './print-dialog.component';
-import { FormControl } from '@angular/forms';
-import { MessagesService } from '../services/messages.service';
 import { ThaiDatePipe } from '../pipe/thai-date.pipe';
+import { BloodService } from '../services/blood.service';
+import { MessagesService } from '../services/messages.service';
+import { SharedModule } from '../shared/shared.module';
+import { PrintDialogComponent } from './print-dialog.component';
 
 @Component({
   selector: 'app-blood-time-period',
@@ -22,7 +22,7 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
       }
       <p-card [style]="{ 'min-width': '30vw' }">
         <p
-                class="hidden flex justify-content-center text-gray-200 tasadith text-2xl -mt-4 xs:text-sm"
+          class="hidden flex justify-content-center text-gray-200 tasadith text-2xl -mt-4 xs:text-sm"
         >
           Blood Pressure Time Period
         </p>
@@ -30,16 +30,16 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
           <div class="flex">
             <div class="flex align-items-center justify-content-center w-full">
               <p-calendar
-                      [formControl]="selectedDates"
-                      [iconDisplay]="'input'"
-                      [showIcon]="true"
-                      selectionMode="range"
-                      inputId="icondisplay"
-                      name="date"
-                      appendTo="body"
-                      dateFormat="d M yy"
-                      (onSelect)="onSelect()"
-                      [readonlyInput]="true"
+                [formControl]="selectedDates"
+                [iconDisplay]="'input'"
+                [showIcon]="true"
+                selectionMode="range"
+                inputId="icondisplay"
+                name="date"
+                appendTo="body"
+                dateFormat="d M yy"
+                (onSelect)="onSelect()"
+                [readonlyInput]="true"
               ></p-calendar>
             </div>
           </div>
@@ -51,15 +51,15 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
         @if (bloodPressureRecords$ | async; as bloods) {
           <div id="contentToConvert">
             <p-table
-                    #bp
-                    [value]="bloods"
-                    [paginator]="true"
-                    [rows]="5"
-                    [rowHover]="true"
-                    [breakpoint]="'960px'"
-                    [tableStyle]="{ 'min-width': '50rem' }"
-                    responsiveLayout="stack"
-                    styleClass="p-datatable-gridlines"
+              #bp
+              [value]="bloods"
+              [paginator]="true"
+              [rows]="5"
+              [rowHover]="true"
+              [breakpoint]="'960px'"
+              [tableStyle]="{ 'min-width': '50rem' }"
+              responsiveLayout="stack"
+              styleClass="p-datatable-gridlines"
             >
               <ng-template pTemplate="caption">
                 <div class="flex justify-content-between align-items-center">
@@ -68,8 +68,8 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
                   </span>
                   <span>
                     <p-button
-                            (onClick)="showDialog(bloods)"
-                            icon="pi pi-print"
+                      (onClick)="showDialog(bloods)"
+                      icon="pi pi-print"
                     />
                   </span>
                 </div>
@@ -80,18 +80,18 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
                 </tr>
                 <tr>
                   <th
-                          colspan="2"
-                          style="width: 20%"
-                          class="text-center text-green-400"
+                    colspan="2"
+                    style="width: 20%"
+                    class="text-center text-green-400"
                   >
                     Morning<br/><span class="text-gray-600"
                   >(Before medicine)</span
                   >
                   </th>
                   <th
-                          colspan="2"
-                          style="width: 20%"
-                          class="text-center text-yellow-400"
+                    colspan="2"
+                    style="width: 20%"
+                    class="text-center text-yellow-400"
                   >
                     Evening<br/><span class="text-gray-600"
                   >(After medicine )</span
@@ -131,8 +131,8 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
                   <td class="no-print">
                     @if (admin) {
                       <i
-                              class="pi pi-pen-to-square mr-2 ml-2 text-blue-400"
-                              (click)="showDialog(blood)"
+                        class="pi pi-pen-to-square mr-2 ml-2 text-blue-400"
+                        (click)="showDialog(blood)"
                       ></i>
                       <p-confirmPopup/>
                       <i class="pi pi-trash mr-2 ml-2 text-orange-600"></i>
@@ -148,7 +148,7 @@ import { ThaiDatePipe } from '../pipe/thai-date.pipe';
         }
       </div>
     </div>
-	`,
+  `,
   styles: `
     .p-card-center {
       display: flex;
@@ -225,7 +225,7 @@ export class BloodTimePeriodComponent implements OnDestroy, OnInit {
 
   showDialog(blood: any) {
     this.ref = this.dialogService.open(PrintDialogComponent, {
-      data: {blood},
+      data: blood,
       header: 'Blood Pressure Print',
       width: '700px',
       breakpoints: {
