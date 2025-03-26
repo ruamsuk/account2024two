@@ -34,76 +34,9 @@ interface Record {
     </div>
   `,
   styles: `
-    #printContent {
-      padding: 5px;
-    }
-
-    .custom-table {
-      width: 100%;
-      border-collapse: collapse;
-      background-color: white;
-      color: black;
-    }
-
-    .custom-table th,
-    .custom-table td {
-      border: 1px solid #000000;
-      padding: 5px 0 5px 15px;
-      font-family: 'Sarabun', sans-serif !important;
-      font-size: 14px !important;
-      font-weight: normal !important;
-    }
-
-    .custom-table th {
-      padding-top: 6px;
-      padding-bottom: 6px;
-      text-align: left;
-      //background-color: #f2f2f2;
-      color: black !important;
-    }
-
-    @media print {
-      button {
-        .p-button-label {
-          display: none;
-        }
-      }
-
-      table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-
-      table,
-      th,
-      td {
-        border: 1px solid black;
-      }
-
-      th,
-      td {
-        padding: 8px;
-        text-align: left;
-      }
-
-      th {
-        background-color: #f2f2f2; /* สีพื้นหลัง */
-        font-weight: bold;
-      }
-
-      .thick-border {
-        border-width: 2px; /* กำหนดความหนาของเส้นตาราง */
-      }
-      /* ตั้งค่าหน้ากระดาษ */
-      @page {
-        margin: 1cm;
-        size: A4 portrait;
-      }
-    }
   `,
 })
 export class PrintDialogComponent implements OnDestroy {
-  dataPrints: any;
   mappedRecords: {
     no: number;
     date: string;
@@ -112,7 +45,6 @@ export class PrintDialogComponent implements OnDestroy {
     evening_bp1: string;
     evening_bp2: string;
   }[] = [];
-
 
   constructor(
     public ref: DynamicDialogRef,

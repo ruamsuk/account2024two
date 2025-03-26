@@ -1,12 +1,12 @@
+import { NgOptimizedImage } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UserService } from '../services/user.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { SharedModule } from '../shared/shared.module';
+import { concatMap, of, Subscription } from 'rxjs';
 import { ImageUploadService } from '../services/image-upload.service';
 import { MessagesService } from '../services/messages.service';
-import { concatMap, of, Subscription } from 'rxjs';
-import { NgOptimizedImage } from '@angular/common';
+import { UserService } from '../services/user.service';
+import { SharedModule } from '../shared/shared.module';
 
 @Component({
   selector: 'app-user-edit',
@@ -99,7 +99,7 @@ import { NgOptimizedImage } from '@angular/common';
             [dropdown]="true"
             [suggestions]="filteredRoles"
             (completeMethod)="filterRoles($event)"
-            optionLabel="name"
+            optionLabel="name" optionValue="name"
             placeholder="Select roles"
             styleClass="w-full"
             appendTo="body"
